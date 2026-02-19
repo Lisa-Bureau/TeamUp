@@ -1,0 +1,46 @@
+body {
+  background-color: var(--light-color);
+  width: 100vw;
+}
+
+#root {
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+main {
+  height: 100%;
+  overflow-y: auto;
+}
+
+.react-hot-toast {
+  font-family: var(--title-font);
+}
+
+h1 {
+  font-family: var(--heading-font);
+  font-size: var(--heading-size);
+}
+
+h2 {
+  font-family: var(--title-font);
+  font-size: var(--title-size);
+}
+
+button {
+  font-family: var(--button-mobile);
+  font-size: var(--button-size);
+}
+
+@media (min-width: 1024px) {
+  h1 {
+    font-size: var(--heading-desktop-size);
+  }
+  h2 {
+    font-size: var(--title-desktop-size);
+  }
+  button {
+    font-size: var(--button-desktop-size);
+  }
+}

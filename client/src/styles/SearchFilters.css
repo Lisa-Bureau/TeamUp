@@ -1,0 +1,36 @@
+.ttls {
+  font-family: var(--body-font);
+  font-size: var(--body-size);
+}
+
+.price-tag {
+  font-family: var(--body-font);
+  font-size: var(--body-size);
+}
+
+.slider {
+  height: 0.2rem;
+  accent-color: var(--accent-color);
+}
+
+.slider-disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.range-price {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+@media (min-width: 1024px) {
+  .price-tag {
+    font-size: var(--tag-desktop-size);
+  }
+
+  .slider {
+    height: 0.4rem;
+    width: 7rem;
+  }
+}

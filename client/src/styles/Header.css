@@ -1,0 +1,45 @@
+.header-navbar {
+  width: 100vw;
+  height: 3.5rem;
+  background-color: var(--light-color);
+  box-shadow: 0 4px 4px rgba(46, 46, 46, 0.25);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1.25rem 0 1.25rem;
+
+  & p:nth-of-type(1) {
+    font-family: var(--body-font);
+    font-size: var(--body-size);
+    line-height: 1.5;
+  }
+
+  & p:nth-of-type(2) {
+    font-family: var(--title-font);
+    font-size: var(--title-size);
+  }
+
+  & a > img {
+    width: 4rem;
+  }
+
+  & > .btn-chat {
+    background-color: var(--dark-color);
+    width: 2rem;
+    height: 2rem;
+    border-radius: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    & > img {
+      width: 1rem;
+    }
+  }
+}
+
+@media (min-width: 1024px) {
+  .header-navbar {
+    display: none;
+  }
+}

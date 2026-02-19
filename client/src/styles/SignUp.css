@@ -1,0 +1,60 @@
+#sign-up {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--dark-color);
+  margin-bottom: 10rem;
+
+  h1 {
+    margin-top: 5vh;
+    margin-bottom: 3vh;
+    font-size: var(--heading-size);
+    font-family: var(--heading-font);
+  }
+
+  .champs-requis {
+    font-family: var(--body-font);
+    font-size: var(--body-size);
+    font-style: italic;
+    margin-top: -0.8rem;
+  }
+
+  .message-error {
+    color: var(--refused-color);
+    font-family: var(--body-highlight-font);
+    font-size: var(--body-size);
+    text-align: center;
+  }
+
+  div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    gap: 3vh;
+  }
+}
+
+@media (min-width: 1024px) {
+  #sign-up {
+    margin-bottom: 0rem;
+    margin-left: 6rem;
+
+    h1 {
+      font-size: var(--heading-desktop-size);
+    }
+
+    .champs-requis {
+      font-size: var(--body-desktop-size);
+    }
+
+    .message-error {
+      font-size: var(--body-desktop-size);
+    }
+
+    div {
+      display: flex;
+      flex-direction: row;
+    }
+  }
+}

@@ -1,0 +1,231 @@
+.homepage {
+  margin-bottom: 10rem;
+}
+
+.hero-wrapper {
+  background-image: url("logo-op.png");
+  background-repeat: no-repeat;
+  background-size: 280px;
+  height: 280px;
+  padding-top: 40px;
+}
+
+h1.homepage-title {
+  text-align: center;
+  color: var(--accent-color);
+  font-family: var(--heading-font);
+  font-size: 60px;
+  padding: 1rem 1rem 0rem 1rem;
+  height: 68px;
+}
+
+h2.homepage-subtitle {
+  color: var(--dark-color);
+  font-family: var(--heading-font);
+  font-size: var(--heading-size);
+  padding: 1rem;
+}
+
+article.homepage-article {
+  width: 90%;
+  height: 120px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0px 4px 24px 0px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  padding: 0 1rem;
+  justify-content: center;
+  gap: 0.5rem;
+  background-color: var(--light-color);
+}
+
+.homepage div.hero-wrapper .homepage-article {
+  align-items: flex-start;
+  text-align: center;
+  justify-content: center;
+}
+
+article.homepage-article {
+  & p:nth-of-type(1) {
+    font-family: var(--body-font);
+    font-size: var(--body-size);
+    line-height: 1.4;
+  }
+
+  & .presentation {
+    margin-top: -0.8rem;
+  }
+
+  & p:nth-of-type(2) {
+    width: 100%;
+    font-family: var(--button-font);
+    font-size: var(--button-size);
+    line-height: 1.4;
+  }
+}
+
+.faq-wrapper .homepage-subtitle {
+  padding: 1.5rem 1rem;
+}
+
+.homepage a p {
+  text-align: center;
+}
+
+article.homepage-article p strong {
+  font-family: var(--body-highlight-font);
+}
+
+.superwrapper {
+  position: relative;
+}
+
+.homepage-button-wrapper {
+  display: flex;
+  width: 100%;
+  margin: auto;
+  justify-content: space-around;
+  padding: 1rem;
+  position: absolute;
+  top: -30px;
+}
+
+.homepage-button-wrapper a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  font-size: var(--button-size);
+  font-family: var(--button-font);
+  color: var(--light-color);
+  background-color: var(--button-color);
+  border-radius: 10px;
+  width: 113px;
+  height: 28px;
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+}
+
+.homepage-button-wrapper a img {
+  width: 15px;
+  height: 15px;
+}
+
+.homepage-button-wrapper a {
+  text-decoration: none;
+}
+
+.homepage-carrousel {
+  display: flex;
+  gap: 1rem;
+  overflow-x: scroll;
+}
+
+.homepage-carrousel article {
+  min-width: 320px;
+}
+
+.homepage-subtitle-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-right: 16px;
+}
+
+.homepage-subtitle-wrapper p {
+  font-size: var(--tag-size);
+  font-family: var(--body-font);
+}
+
+@media (min-width: 1024px) {
+  .homepage {
+    margin-bottom: 2rem;
+    padding-left: 8rem;
+  }
+
+  .faq-wrapper {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+  }
+
+  .hero-wrapper {
+    background-image: url("/logo-op.png");
+    background-repeat: no-repeat;
+    background-size: 300px;
+    height: 300px;
+    padding-top: 40px;
+    background-position: right;
+  }
+
+  .hero-wrapper .homepage-article {
+    width: 60%;
+  }
+
+  h1.homepage-title {
+    font-size: 128px;
+  }
+
+  h2.homepage-subtitle {
+    font-size: var(--heading-desktop-size);
+  }
+
+  article.homepage-article {
+    & p:nth-of-type(1) {
+      font-size: var(--body-desktop-size);
+      line-height: 1.4;
+    }
+
+    & p:nth-of-type(2) {
+      font-size: var(--button-desktop-size);
+    }
+  }
+
+  .hero-wrapper {
+    padding-top: 0px;
+    height: 320px;
+  }
+
+  .homepage div.hero-wrapper .homepage-article {
+    margin-top: 57px;
+    height: 150px;
+  }
+
+  .homepage div.hero-wrapper .homepage-article p {
+    padding-top: 4px;
+  }
+
+  .homepage-button-wrapper {
+    justify-content: center;
+    gap: 124px;
+    top: -37px;
+  }
+
+  .homepage-button-wrapper a {
+    font-size: var(--button-desktop-size);
+    width: 133px;
+    height: 45px;
+    transition: box-shadow 3s ease-in-out;
+    transition: all 0.2s ease;
+  }
+
+  .homepage-button-wrapper a:hover {
+    cursor: pointer;
+    transform: translateY(1px);
+    box-shadow: 0 2px 0 rgba(0, 0, 0, 0.25);
+  }
+
+  .homepage-button-wrapper a:hover {
+    cursor: pointer;
+    box-shadow: inset 0 8px 8px -8px rgba(0, 0, 0, 0.5);
+  }
+
+  .faq-wrapper .homepage-subtitle {
+    padding: 1.5rem 0 1.5rem 1rem;
+  }
+
+  .homepage-subtitle-wrapper p {
+    font-size: var(--tag-desktop-size);
+  }
+}

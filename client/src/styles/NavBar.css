@@ -1,0 +1,254 @@
+.navbar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100vw;
+  height: 3.75rem;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color: var(--dark-color);
+  z-index: 10;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: -6rem;
+    inset-inline: 0;
+    height: 6rem;
+    background: linear-gradient(
+      to top,
+      rgba(255, 255, 255, 0.95),
+      rgba(255, 255, 255, 0)
+    );
+    pointer-events: none;
+  }
+
+  & > .top-navbar,
+  & > .bottom-navbar {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex: 1;
+  }
+
+  & > .top-navbar {
+    margin-right: 2.5rem;
+  }
+}
+
+.hello {
+  display: none;
+}
+
+.navbar-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  gap: 5px;
+  width: 100%;
+  text-decoration: none;
+  color: var(--light-color);
+  font-family: var(--body-font);
+  font-size: var(--body-size);
+
+  &.link-active {
+    color: var(--button-color);
+
+    > svg {
+      fill: var(--button-color);
+    }
+  }
+
+  &.link-publication {
+    position: absolute;
+    left: 50%;
+    bottom: 2.45rem;
+    transform: translateX(-50%);
+    z-index: 200;
+    width: 2.6rem;
+    height: 2.6rem;
+    border-radius: 10px;
+    background-color: var(--button-color);
+    box-shadow: 0 4px 4px rgba(46, 46, 46, 0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    p {
+      display: none;
+    }
+
+    svg {
+      width: 28px;
+      height: 28px;
+    }
+
+    &.link-publication-active {
+      box-shadow: inset 0 4px 4px rgba(46, 46, 46, 0.25);
+    }
+  }
+}
+
+svg {
+  fill: var(--light-color);
+}
+
+.top-navbar .navbar-link {
+  &:nth-of-type(1) svg {
+    width: 25px;
+    height: 25px;
+  }
+  &:nth-of-type(2) svg {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+.bottom-navbar .navbar-link {
+  & .icon-activities {
+    width: 27px;
+    height: 27px;
+  }
+  & .icon-profile {
+    width: 22px;
+    height: 22px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .navbar {
+    width: 6rem;
+    height: 100vh;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: 4px 0px 6px 0px rgba(46, 46, 46, 0.25);
+
+    & > .top-navbar,
+    & > .bottom-navbar {
+      flex-direction: column;
+      align-items: center;
+      gap: 1.5rem;
+      width: 100%;
+    }
+
+    & > .middle-navbar {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.5rem;
+      width: 100%;
+
+      & > .navbar-link {
+        transition: transform 0.3s ease-in-out;
+
+        &:hover {
+          transform: scale(1.2);
+        }
+      }
+    }
+
+    & > .top-navbar {
+      justify-content: flex-start;
+      padding-top: 0.5rem;
+      margin-right: 0;
+    }
+
+    & > .bottom-navbar {
+      justify-content: flex-end;
+      padding-bottom: 1.25rem;
+    }
+  }
+
+  .hello {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: var(--light-color);
+
+    p:nth-of-type(1) {
+      font-family: var(--body-font);
+      font-size: var(--body-desktop-size);
+      line-height: 2;
+    }
+
+    p:nth-of-type(2) {
+      font-family: var(--title-font);
+      font-size: var(--title-desktop-size);
+    }
+
+    & a > img {
+      width: 4.5rem;
+    }
+  }
+
+  .navbar-link {
+    font-size: var(--body-desktop-size);
+    position: relative;
+    width: 50px;
+    text-align: center;
+
+    &.link-publication {
+      position: static;
+      transform: none;
+      width: 60px;
+      height: 60px;
+      box-shadow: none;
+      justify-content: center;
+
+      & > svg {
+        width: 35px;
+        height: 35px;
+      }
+    }
+  }
+
+  .navbar-link:not(.link-publication)::before {
+    content: "";
+    position: absolute;
+    left: -10px;
+    top: 50%;
+    width: 3px;
+    height: 0;
+    background: var(--button-color);
+    transform: translateY(-50%);
+    transition: height 0.2s ease;
+  }
+
+  .navbar-link:not(.link-publication, .link-active):hover::before {
+    height: 100%;
+  }
+
+  .top-navbar .navbar-link {
+    &:nth-of-type(1) svg {
+      width: 40px;
+      height: 40px;
+    }
+    &:nth-of-type(2) svg {
+      width: 30px;
+      height: 30px;
+    }
+    &:nth-of-type(3) svg {
+      width: 32px;
+      height: 32px;
+    }
+  }
+
+  .bottom-navbar .navbar-link {
+    & .icon-chat {
+      width: 32px;
+      height: 32px;
+    }
+
+    & .icon-activities {
+      width: 40px;
+      height: 40px;
+    }
+
+    & .icon-profile {
+      width: 32px;
+      height: 32px;
+    }
+  }
+}

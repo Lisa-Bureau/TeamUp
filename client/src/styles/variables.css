@@ -1,0 +1,76 @@
+@font-face {
+  font-family: "heading-mobile";
+  src: url(../assets/fonts/Poppins/Poppins-SemiBold.ttf) format("truetype");
+}
+
+@font-face {
+  font-family: "title-mobile";
+  src: url(../assets/fonts/Poppins/Poppins-SemiBold.ttf) format("truetype");
+}
+
+@font-face {
+  font-family: "button-mobile";
+  src: url(../assets/fonts/Poppins/Poppins-Medium.ttf) format("truetype");
+}
+
+@font-face {
+  font-family: "body-highlight-mobile";
+  src: url(../assets/fonts/Inter/Inter_24pt-Medium.ttf) format("truetype");
+}
+
+@font-face {
+  font-family: "body-mobile";
+  src: url(../assets/fonts/Inter/Inter_24pt-Regular.ttf) format("truetype");
+}
+
+@font-face {
+  font-family: "tag-mobile";
+  src: url(../assets/fonts/Inter/Inter_24pt-Regular.ttf) format("truetype");
+}
+
+:root {
+  --heading-font: "heading-mobile", sans-serif;
+  --title-font: "title-mobile", sans-serif;
+  --button-font: "button-mobile", sans-serif;
+  --body-highlight-font: "body-highlight-mobile", sans-serif;
+  --body-font: "body-mobile", sans-serif;
+  --tag-font: "tag-mobile", sans-serif;
+
+  --light-color: rgb(250, 250, 250);
+  --dark-color: rgb(46, 46, 46);
+  --neutral-color: rgb(226, 226, 226);
+  --accent-color: rgb(108, 92, 231);
+  --button-color: rgb(242, 183, 5);
+  --input-color: rgb(0, 189, 125);
+  --refused-color: rgb(230, 57, 70);
+
+  --heading-size: 18px;
+  --title-size: 16px;
+  --button-size: 12px;
+  --body-size: 10px;
+  --tag-size: 8px;
+
+  --heading-desktop-size: 32px;
+  --title-desktop-size: 20px;
+  --button-desktop-size: 16px;
+  --body-desktop-size: 14px;
+  --tag-desktop-size: 10px;
+}
+
+[data-mode="light"] {
+  --light-color: rgb(250, 250, 250);
+  --dark-color: rgb(46, 46, 46);
+  --neutral-color: rgb(226, 226, 226);
+  --accent-color: rgb(108, 92, 231);
+  --button-color: rgb(242, 183, 5);
+  --input-color: rgb(0, 189, 125);
+}
+
+[data-mode="dark"] {
+  --light-color: rgb(28, 28, 28);
+  --dark-color: rgb(240, 240, 240);
+  --neutral-color: rgb(60, 60, 60);
+  --accent-color: rgb(130, 115, 255);
+  --button-color: rgb(255, 196, 25);
+  --input-color: rgb(0, 209, 155);
+}

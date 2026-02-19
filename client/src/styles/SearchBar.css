@@ -1,0 +1,223 @@
+section.searchbar {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  width: 100%;
+  gap: 0.5rem;
+}
+
+section.searchbar article {
+  position: relative;
+  margin-top: 4px;
+}
+
+section.searchbar article:nth-of-type(1) {
+  width: 100%;
+}
+
+section.searchbar article:nth-of-type(2) {
+  width: 45%;
+}
+section.searchbar article:nth-of-type(3) {
+  width: 35%;
+}
+
+section.searchbar article input {
+  border: 1px solid var(--input-color);
+  border-radius: 8px;
+  height: 37px;
+  padding-left: 30px;
+  width: 100%;
+  font-family: var(--body-font);
+  font-size: var(--body-size);
+}
+
+section.searchbar article input:not(.error-input):focus {
+  box-shadow: 0 0 0 2px rgba(0, 189, 125, 0.2);
+  outline: none;
+}
+
+section.searchbar article input.error-input {
+  border: 1px solid rgb(252, 66, 66);
+}
+
+section.searchbar article input.error-input:focus {
+  box-shadow: 0 0 0 2px rgba(252, 66, 66, 0.2);
+  outline: none;
+  border: 2px solid var(--refused-color);
+  border-radius: 8px;
+}
+
+section.searchbar article img {
+  position: absolute;
+  left: 7px;
+  top: 7px;
+}
+
+section.searchbar article svg {
+  position: absolute;
+  left: 7px;
+  top: 7px;
+  fill: var(--input-color);
+  width: 24px;
+  height: 24px;
+}
+
+section.searchbar article svg.error-svg {
+  fill: var(--refused-color);
+}
+
+section.searchbar button.filter-button {
+  width: 37px;
+  height: 37px;
+  margin-top: 4px;
+  background-color: var(--input-color);
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  & > img {
+    width: 24px;
+  }
+}
+
+section.searchbar article ul.dropdown,
+section.searchbar article ul.dropdown-false {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  margin-top: 4px;
+  background-color: var(--light-color);
+  border: 1px solid var(--input-color);
+  border-radius: 10px;
+  max-height: 380px;
+  overflow-y: auto;
+  z-index: 2;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+section.searchbar article ul.dropdown-false {
+  color: var(--refused-color);
+  background-color: var(--light-color);
+  border: 1px solid var(--refused-color);
+  padding-left: 1rem;
+}
+
+section.searchbar article ul.dropdown {
+  background-color: var(--light-color);
+  border: 1px solid var(--input-color);
+  position: absolute;
+  top: 37px;
+  width: 100%;
+  z-index: 2;
+}
+
+section.searchbar article ul.dropdown button {
+  width: 100%;
+  border: none;
+  background: none;
+  font-family: var(--body-font);
+  font-size: var(--body-size);
+  text-align: start;
+  padding-left: 15px;
+  height: 30px;
+}
+
+.date-input::-webkit-calendar-picker-indicator {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.date-input {
+  color: #787878;
+}
+
+.date-input:focus,
+.date-input:valid {
+  color: var(--dark-color);
+}
+
+section.searchbar article ul.dropdown-false li {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  border: none;
+  background: none;
+  font-family: var(--body-font);
+  font-size: var(--body-size);
+  padding-left: 4px;
+  height: 30px;
+}
+
+@media screen and (min-width: 1024px) {
+  section.searchbar article ul.dropdown button {
+    font-size: var(--body-desktop-size);
+  }
+
+  section.searchbar article ul.dropdown button:hover {
+    background-color: var(--neutral-color);
+    cursor: pointer;
+  }
+
+  section.searchbar article input {
+    font-size: var(--body-desktop-size);
+    height: 45px;
+    padding-left: 40px;
+  }
+
+  section.searchbar article:nth-of-type(1) {
+    max-width: 285px;
+  }
+
+  section.searchbar article:nth-of-type(2) {
+    max-width: 210px;
+  }
+
+  section.searchbar article:nth-of-type(3) {
+    max-width: 150px;
+  }
+
+  section.searchbar article ul.dropdown,
+  section.searchbar article ul.dropdown-false {
+    top: 45px;
+  }
+
+  section.searchbar article img,
+  section.searchbar article svg {
+    left: 7px;
+    top: 10px;
+  }
+
+  section.searchbar button.search-button {
+    color: var(--light-color);
+    background: var(--button-color);
+    font-size: var(--body-desktop-size);
+    font-family: var(--button-font);
+    width: 132px;
+    height: 45px;
+    border-radius: 10px;
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+    margin-top: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+  }
+
+  section.searchbar button.search-button:hover {
+    transform: scale(1.05);
+  }
+
+  section.searchbar {
+    width: 100%;
+    justify-content: flex-start;
+    gap: 8px;
+    margin-top: 0;
+  }
+}

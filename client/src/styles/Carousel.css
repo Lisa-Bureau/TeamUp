@@ -1,0 +1,50 @@
+.embla {
+  overflow: hidden;
+}
+
+.embla__viewport {
+  overflow: hidden; /* obligatoire */
+  cursor: grab;
+}
+
+.embla__container {
+  display: flex;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.embla__slide {
+  flex: 0 0 320px;
+  opacity: 0.2;
+  transition: opacity 0.3s;
+  padding: 20px 10px;
+}
+
+.embla__slide.is-visible {
+  opacity: 1;
+}
+
+.embla__dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.embla__dots button {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #ccc;
+  border: none;
+}
+
+.embla__dots button.active {
+  background: #000;
+}
+
+@media (min-width: 1440px) {
+  .embla__slide {
+    flex: 0 0 400px;
+  }
+}
