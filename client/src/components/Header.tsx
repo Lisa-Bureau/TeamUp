@@ -15,9 +15,14 @@ function Header() {
         <img src="/logo.png" alt="logo team up" />
       </NavLink>
       {auth && (
-        <Link to="/messenger" className="btn-chat">
+        <NavLink
+          to="/messenger"
+          className={({ isActive }) =>
+            isActive ? "btn-chat btn-chat-active" : "btn-chat"
+          }
+        >
           <img src="/icons/message.png" alt="icon message" />
-        </Link>
+        </NavLink>
       )}
     </header>
   );

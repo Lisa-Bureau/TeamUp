@@ -36,6 +36,11 @@
       width: 1rem;
     }
   }
+
+  & > .btn-chat-active {
+    background-color: var(--button-color);
+    box-shadow: 0 2px 4px rgba(46, 46, 46, 0.25);
+  }
 }
 
 @media (min-width: 1024px) {
