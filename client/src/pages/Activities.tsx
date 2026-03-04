@@ -25,23 +25,29 @@ const sortingCondition = [
   { key: "price", label: "Prix" },
 ];
 
-const LIMIT = 10;
 const excludeFromFilterTags = ["sport", "playingAt", "city"];
 
 function Activities() {
   const { page } = useParams();
+  const LIMIT = 10;
   const currentPage = Math.max(1, Number(page) || 1);
-
   const [activities, setActivities] = useState<Activity[]>([]);
   const [totalActivities, setTotalActivities] = useState(0);
   const [filters, setFilters] = useState<Filters>({
     sport: "",
     playingAt: "",
     city: "",
+    locker: false,
+    shower: false,
+    toilet: false,
+    air_conditioning: false,
+    level: null,
+    price: null,
+    disabled: false,
   });
   const [totalPages, setTotalPages] = useState(1);
-  const [sortOpen, setSortOpen] = useState(false);
   const [sort, setSort] = useState("");
+  const [sortOpen, setSortOpen] = useState(false);
   const navigate = useNavigate();
 
   const translateTaglables = useCallback((key: string, value: string) => {
