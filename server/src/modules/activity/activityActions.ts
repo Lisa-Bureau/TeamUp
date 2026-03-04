@@ -6,11 +6,6 @@ import mailService from "../../services/mailService";
 
 const add: RequestHandler = async (req, res, next) => {
   try {
-    if (!req.auth.sub) {
-      res.sendStatus(StatusCodes.UNAUTHORIZED);
-      return;
-    }
-
     const { activity, guests } = req.body;
 
     if (!activity.visibility && guests.length === 0) {
@@ -77,11 +72,6 @@ const browse: RequestHandler = async (req, res, next) => {
 
 const browseMine: RequestHandler = async (req, res, next) => {
   try {
-    if (!req.auth.sub) {
-      res.sendStatus(StatusCodes.UNAUTHORIZED);
-      return;
-    }
-
     const userId = Number(req.auth.sub);
 
     const status = req.query.status as string;

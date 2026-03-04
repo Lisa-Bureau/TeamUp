@@ -125,11 +125,16 @@ const validate: RequestHandler = async (req, res, next) => {
 
 const read: RequestHandler = async (req, res, next) => {
   try {
+    if (!req?.auth) {
+      res.status(StatusCodes.OK).json(null);
+      return;
+    }
+
     const userId = Number.parseInt(req.auth.sub, 10);
     const user = await userRepository.readById(userId);
 
     if (!user) {
-      res.sendStatus(StatusCodes.NOT_FOUND);
+      res.status(StatusCodes.NOT_FOUND).json(null);
       return;
     }
 

@@ -15,28 +15,28 @@ const logIn: RequestHandler = async (req, res, next) => {
 
     const verified = await argon2.verify(user.password, req.body.password);
 
-    if (verified) {
-      const { password, ...userWithoutPassword } = user;
-
-      const myPayload: MyPayload = {
-        sub: user.id.toString(),
-      };
-
-      const token = await jwt.sign(
-        myPayload,
-        process.env.APP_SECRET as string,
-        {
-          expiresIn: "12h",
-        },
-      );
-
-      res.json({
-        token,
-        user: userWithoutPassword,
-      });
-    } else {
-      res.sendStatus(StatusCodes.UNPROCESSABLE_ENTITY);
+    if (!verified) {
+      return res.sendStatus(StatusCodes.UNPROCESSABLE_ENTITY);
     }
+
+    const { password, ...userWithoutPassword } = user;
+
+    const myPayload: MyPayload = {
+      sub: user.id.toString(),
+    };
+
+    const token = await jwt.sign(myPayload, process.env.APP_SECRET as string, {
+      expiresIn: "12h",
+    });
+
+    res.cookie("token", token, {
+      httpOnly: true,
+      sameSite: "lax",
+      secure: false, // ⚠️ true en production (HTTPS)
+      maxAge: 1000 * 60 * 60 * 12,
+    });
+
+    res.json(userWithoutPassword);
   } catch (err) {
     next(err);
   }
@@ -44,25 +44,36 @@ const logIn: RequestHandler = async (req, res, next) => {
 
 const verifyToken: RequestHandler = (req, res, next) => {
   try {
-    const authorizationHeader = req.get("Authorization");
+    const token = req.cookies.token;
 
-    if (authorizationHeader == null) {
+    if (!token) {
       return next();
-    }
-
-    const [type, token] = authorizationHeader.split(" ");
-
-    if (type !== "Bearer") {
-      throw new Error("Authorization header has not the 'Bearer' type");
     }
 
     req.auth = jwt.verify(token, process.env.APP_SECRET as string) as MyPayload;
 
     next();
   } catch (err) {
-    console.error(err);
-    res.sendStatus(401);
+    res.sendStatus(StatusCodes.UNAUTHORIZED);
   }
 };
 
-export default { logIn, verifyToken };
+const requireAuth: RequestHandler = (req, res, next) => {
+  if (!req.auth || !req.auth.sub) {
+    return res.sendStatus(StatusCodes.UNAUTHORIZED);
+  }
+
+  next();
+};
+
+const logout: RequestHandler = (req, res) => {
+  res.clearCookie("token", {
+    httpOnly: true,
+    sameSite: "lax",
+    secure: false, // true en production
+  });
+
+  res.sendStatus(StatusCodes.NO_CONTENT);
+};
+
+export default { logIn, verifyToken, requireAuth, logout };

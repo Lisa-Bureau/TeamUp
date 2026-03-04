@@ -48,11 +48,6 @@ type User = {
 
 type UserProfile = Omit<User, "password">;
 
-type Auth = {
-  user: User;
-  token: string;
-};
-
 type Participant = {
   id: number;
   userId: number;

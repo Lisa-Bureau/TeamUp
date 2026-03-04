@@ -23,16 +23,22 @@ function formatBirthDate(dateString: string): string {
 }
 
 function Profile() {
-  const { auth } = useAuth();
+  const { auth, setAuth } = useAuth();
   const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
+
+  const logout = async () => {
+    fetch(`${import.meta.env.VITE_API_URL}/api/logout`, {
+      method: "POST",
+      credentials: "include",
+    });
+    setAuth(null);
+  };
 
   useEffect(() => {
     if (!auth) return;
 
     fetch(`${import.meta.env.VITE_API_URL}/api/profile`, {
-      headers: {
-        Authorization: `Bearer ${auth.token}`,
-      },
+      credentials: "include",
     })
       .then((response) => response.json())
       .then((profile) => setUserProfile(profile));
@@ -160,7 +166,9 @@ function Profile() {
               alt="Désactiver"
               className="profile-icon"
             />
-            <span>Désactiver mon compte</span>
+            <button type="button" onClick={() => logout()}>
+              Se Déconnecter
+            </button>
             <img
               src="/icons/voir-plus.png"
               alt="Aller"

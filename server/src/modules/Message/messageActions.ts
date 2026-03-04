@@ -5,14 +5,14 @@ import messageRepository from "./messageRepository";
 import { StatusCodes } from "http-status-codes";
 
 const browse: RequestHandler = async (req, res, next) => {
-  const userId = req.auth?.sub ? Number(req.auth.sub) : null;
+  const userId = Number(req.auth.sub);
 
   const activityId = Number(req.query.activityId);
 
   try {
     const [messages] = await MessageRepository.read(userId, activityId);
 
-    res.status(200).json(messages);
+    res.status(StatusCodes.OK).json(messages);
   } catch (err) {
     next(err);
   }
@@ -29,7 +29,9 @@ const add: RequestHandler = async (req, res, next) => {
     );
 
     if (result.affectedRows === 0) {
-      res.status(400).json({ message: "Message Cannot be created" });
+      res
+        .status(StatusCodes.BAD_REQUEST)
+        .json({ message: "Message Cannot be created" });
     }
 
     const [message] = await MessageRepository.readSingle(result.insertId);
@@ -37,7 +39,9 @@ const add: RequestHandler = async (req, res, next) => {
 
     LongPollManager.notifyWaiting(activityId.toString(), newMessage as Message);
 
-    res.status(201).json({ message: "Message Created", result });
+    res
+      .status(StatusCodes.CREATED)
+      .json({ message: "Message Created", result });
   } catch (err) {
     next(err);
   }

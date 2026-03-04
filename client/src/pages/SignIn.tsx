@@ -12,7 +12,7 @@ function SignIn() {
   const [error, setError] = useState("");
 
   const { setAuth } = useAuth() as {
-    setAuth: (auth: Auth | null) => void;
+    setAuth: (auth: User | null) => void;
   };
 
   useEffect(() => {
@@ -31,6 +31,7 @@ function SignIn() {
     const response = await fetch(`${import.meta.env.VITE_API_URL}/api/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
+      credentials: "include",
       body: JSON.stringify({
         email: (emailRef.current as HTMLInputElement).value,
         password: (passwordRef.current as HTMLInputElement).value,

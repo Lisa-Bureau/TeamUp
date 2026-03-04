@@ -19,10 +19,12 @@ const browseByActivity: RequestHandler = async (req, res, next) => {
 
 const browseUserActivity: RequestHandler = async (req, res, next) => {
   try {
-    const userId = req.auth?.sub ? Number(req.auth.sub) : null;
+    const userId = Number(req.auth.sub);
 
     if (!userId) {
-      res.status(400).json({ message: "UserId is required" });
+      res
+        .status(StatusCodes.BAD_REQUEST)
+        .json({ message: "UserId is required" });
       return;
     }
 
@@ -30,11 +32,11 @@ const browseUserActivity: RequestHandler = async (req, res, next) => {
       await participationRepository.readUserActity(userId);
 
     if (activitiesUserEnrolled.length === 0) {
-      res.sendStatus(204);
+      res.sendStatus(StatusCodes.NO_CONTENT);
       return;
     }
 
-    res.status(201).json(activitiesUserEnrolled);
+    res.status(StatusCodes.CREATED).json(activitiesUserEnrolled);
   } catch (err) {
     next(err);
   }
@@ -42,11 +44,6 @@ const browseUserActivity: RequestHandler = async (req, res, next) => {
 
 const add: RequestHandler = async (req, res, next) => {
   try {
-    if (!req.auth.sub) {
-      res.sendStatus(StatusCodes.UNAUTHORIZED);
-      return;
-    }
-
     const response = await participationRepository.create(req.body);
 
     const mailData = await activityRepository.readWithOrganizer(
@@ -76,11 +73,6 @@ const add: RequestHandler = async (req, res, next) => {
 
 const editStatus: RequestHandler = async (req, res, next) => {
   try {
-    if (!req.auth.sub) {
-      res.sendStatus(StatusCodes.UNAUTHORIZED);
-      return;
-    }
-
     const { userId, activityId, status, participantUsername, type } = req.body;
 
     const result = await ParticipationRepository.update(

@@ -18,7 +18,7 @@ function NavBar() {
               <img src="/logo.png" alt="logo teamup" />
             </NavLink>
             <p>Bonjour</p>
-            {auth && <p>{auth.user.username}</p>}
+            {auth && <p>{auth.username}</p>}
           </div>
           <NavLink
             className={({ isActive }) =>

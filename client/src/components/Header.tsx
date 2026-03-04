@@ -1,4 +1,4 @@
-import { Link, NavLink } from "react-router";
+import { NavLink } from "react-router";
 import "../styles/Header.css";
 import { useAuth } from "../context/AuthContext";
 
@@ -9,7 +9,7 @@ function Header() {
     <header className="header-navbar">
       <div>
         <p>Bonjour</p>
-        {auth && <p>{auth.user.username}</p>}
+        {auth && <p>{auth.username}</p>}
       </div>
       <NavLink to="/">
         <img src="/logo.png" alt="logo team up" />

@@ -15,11 +15,11 @@ function Home() {
   useEffect(() => {
     fetch(`${import.meta.env.VITE_API_URL}/api/activities?limit=${LIMIT}`, {
       method: "GET",
-      headers: auth?.token ? { Authorization: `Bearer ${auth.token}` } : {},
+      credentials: "include",
     })
       .then((response) => response.json())
       .then((activities) => setActivities(activities.activities));
-  }, [auth]);
+  }, []);
 
   return (
     <section className="homepage">
@@ -43,7 +43,7 @@ function Home() {
               </svg>
               <p>Explore</p>
             </Link>
-            <Link to={auth?.user ? "/publication" : "/sign-in"}>
+            <Link to={auth ? "/publication" : "/sign-in"}>
               <svg viewBox="0 0 28 28">
                 <title>icon add</title>
                 <g>

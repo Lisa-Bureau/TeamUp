@@ -2,8 +2,6 @@ import { useEffect, useRef, useState } from "react";
 import { StatusCodes } from "http-status-codes";
 import "../styles/ParticipantsList.css";
 
-import { useAuth } from "../context/AuthContext";
-
 type ParticipantsListProps = {
   activityId: number;
   visibility: boolean;
@@ -21,19 +19,17 @@ function ParticipantsList({
   const [inputGuest, setInputGuest] = useState("");
   const [error, setError] = useState("");
 
-  const { auth } = useAuth();
-
   useEffect(() => {
     fetch(`${import.meta.env.VITE_API_URL}/api/participants?id=${activityId}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${auth?.token}`,
       },
+      credentials: "include",
     })
       .then((response) => response.json())
       .then((participants) => setParticipants(participants));
-  }, [activityId, auth]);
+  }, [activityId]);
 
   async function addGuest() {
     try {
@@ -67,8 +63,8 @@ function ParticipantsList({
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${auth?.token}`,
           },
+          credentials: "include",
           body: JSON.stringify(newGuest),
         },
       );
@@ -119,8 +115,8 @@ function ParticipantsList({
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${auth?.token}`,
           },
+          credentials: "include",
           body: JSON.stringify({
             status: newStatus,
             userId,

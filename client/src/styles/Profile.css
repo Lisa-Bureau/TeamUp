@@ -147,6 +147,13 @@
   font-size: var(--button-size);
   color: var(--dark-color);
   cursor: pointer;
+
+  & button {
+    background: none;
+    cursor: pointer;
+    font-family: var(--button-font);
+    font-size: var(--button-size);
+  }
 }
 
 .profile-action-row .profile-chevron {
@@ -192,9 +199,12 @@
 
   .profile-age,
   .profile-info-row,
-  .profile-action-row,
   .profile-rating {
     font-size: var(--body-desktop-size);
+  }
+
+  .profile-action-row button {
+    font-size: var(--button-desktop-size);
   }
 
   .profile-icon {

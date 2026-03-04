@@ -44,13 +44,13 @@ function ActivityCard({
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${auth?.token}`,
           },
+          credentials: "include",
           body: JSON.stringify({
-            userId: auth?.user.id,
+            userId: auth?.id,
             activityId: activityId,
             status: status,
-            participantUsername: auth?.user.username,
+            participantUsername: auth?.username,
             type: "invitation",
           }),
         },

@@ -30,7 +30,7 @@ function Messenger() {
         `${import.meta.env.VITE_API_URL}/api/participations`,
         {
           method: "GET",
-          headers: auth?.token ? { Authorization: `Bearer ${auth.token}` } : {},
+          credentials: "include",
         },
       );
       const data: UsersActivities[] = await res.json();
@@ -40,7 +40,7 @@ function Messenger() {
       setUserActivities(unique);
     };
 
-    if (auth?.user?.id) load();
+    if (auth?.id) load();
   }, [auth]);
 
   const openChatroom = (a: UsersActivities) => {

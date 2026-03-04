@@ -47,14 +47,8 @@ function GroupChat({ activity: activityProp }: groupChatType) {
           `${import.meta.env.VITE_API_URL}/api/message?activityId=${activity.id}`,
           {
             method: "GET",
-            headers: auth?.user
-              ? {
-                  "Content-Type": "application/json",
-                  Authorization: `Bearer ${auth?.token}`,
-                }
-              : {
-                  "Content-Type": "application/json",
-                },
+            headers: { "Content-Type": "application/json" },
+            credentials: "include",
           },
         );
 
@@ -67,7 +61,7 @@ function GroupChat({ activity: activityProp }: groupChatType) {
     };
 
     getMessages();
-  }, [activity.id, auth]);
+  }, [activity.id]);
 
   useEffect(() => {
     if (isPollingRef.current) {
@@ -93,8 +87,8 @@ function GroupChat({ activity: activityProp }: groupChatType) {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${auth?.token}`,
           },
+          credentials: "include",
         },
       );
 
@@ -130,11 +124,11 @@ function GroupChat({ activity: activityProp }: groupChatType) {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${auth?.token}`,
           },
+          credentials: "include",
           body: JSON.stringify({
             content: typeMessage,
-            userId: auth?.user.id,
+            userId: auth?.id,
             activityId: activity.id,
           }),
         },
@@ -158,11 +152,11 @@ function GroupChat({ activity: activityProp }: groupChatType) {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${auth?.token}`,
           },
+          credentials: "include",
           body: JSON.stringify({
             messageId: m.id,
-            userId: auth?.user.id,
+            userId: auth?.id,
           }),
         },
       );
@@ -193,10 +187,10 @@ function GroupChat({ activity: activityProp }: groupChatType) {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${auth?.token}`,
           },
+          credentials: "include",
           body: JSON.stringify({
-            userId: auth?.user.id,
+            userId: auth?.id,
             messageId: m.id,
           }),
         },
@@ -243,13 +237,13 @@ function GroupChat({ activity: activityProp }: groupChatType) {
           {messages.map((m) => (
             <div
               key={m.id}
-              className={`single-message ${m.user_id === auth?.user.id ? "users-message" : "others-messages"}`}
+              className={`single-message ${m.user_id === auth?.id ? "users-message" : "others-messages"}`}
             >
               <div
-                className={`${m.user_id === auth?.user.id ? "my-user-date" : "user-date"}`}
+                className={`${m.user_id === auth?.id ? "my-user-date" : "user-date"}`}
               >
                 <h3
-                  className={`username ${m.user_id === auth?.user.id && "my-username"}`}
+                  className={`username ${m.user_id === auth?.id && "my-username"}`}
                 >
                   {m.username}
                 </h3>
@@ -269,7 +263,7 @@ function GroupChat({ activity: activityProp }: groupChatType) {
                     {m.like_count !== 0 && m.like_count}
                   </span>
                 </button>
-                {m.user_id === auth?.user.id && (
+                {m.user_id === auth?.id && (
                   <button
                     type="button"
                     className="like-btn"

@@ -3,15 +3,12 @@ import ActivityTabs from "../components/ActivityTabs.tsx";
 import "../styles/myActivity.css";
 import { useLocation } from "react-router";
 import ActivityCard from "../components/ActivityCard.tsx";
-import { useAuth } from "../context/AuthContext.tsx";
 
 function MyActivities() {
   const location = useLocation();
   const [selectedTab, setSelectedTab] = useState<string>("incoming");
   const [myActivities, setMyActivities] = useState<Activity[]>([]);
   const [showParticpants, setShowParticipants] = useState<number | null>();
-
-  const { auth } = useAuth();
 
   useEffect(() => {
     if (location.state) {
@@ -22,16 +19,13 @@ function MyActivities() {
   }, [location.state]);
 
   const fetchMyActivities = () => {
-    if (!auth?.token) {
-      return;
-    }
     fetch(
       `${import.meta.env.VITE_API_URL}/api/me/activities?status=${selectedTab}`,
       {
         method: "GET",
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${auth.token}`,
         },
       },
     )

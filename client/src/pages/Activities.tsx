@@ -6,7 +6,6 @@ import Pagination from "../components/Pagination";
 import SearchBar from "../components/SearchBar";
 import SearchFilters from "../components/SearchFilters";
 import { useMediaQuery } from "react-responsive";
-import { useAuth } from "../context/AuthContext";
 
 const tagLabelTranslations = [
   { key: "locker", label: "Vestiaires" },
@@ -44,8 +43,6 @@ function Activities() {
   const [sortOpen, setSortOpen] = useState(false);
   const [sort, setSort] = useState("");
   const navigate = useNavigate();
-
-  const { auth } = useAuth();
 
   const translateTaglables = useCallback((key: string, value: string) => {
     const translateOptions = tagLabelTranslations.find((item) => {
@@ -115,7 +112,7 @@ function Activities() {
         `${import.meta.env.VITE_API_URL}/api/activities?page=${currentPage}&limit=${LIMIT}&${queryString}`,
         {
           method: "GET",
-          headers: auth?.token ? { Authorization: `Bearer ${auth.token}` } : {},
+          credentials: "include",
         },
       );
 
@@ -127,7 +124,7 @@ function Activities() {
     };
 
     fetchAndFilterActivities();
-  }, [currentPage, filters, sort, auth]);
+  }, [currentPage, filters, sort]);
 
   return (
     <>

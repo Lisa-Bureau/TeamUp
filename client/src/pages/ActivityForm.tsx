@@ -99,7 +99,7 @@ function ActivityForm() {
 
     const activityData = {
       activity: {
-        user_id: auth?.user.id,
+        user_id: auth?.id,
         sport_id: Number(sportId),
         address: addressRef.current?.value || "",
         city: cityRef.current?.value || "",
@@ -128,8 +128,8 @@ function ActivityForm() {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${auth?.token}`,
           },
+          credentials: "include",
           body: JSON.stringify(activityData),
         },
       );
@@ -197,11 +197,11 @@ function ActivityForm() {
   useEffect(() => {
     fetch(`${import.meta.env.VITE_API_URL}/api/activities?limit=${LIMIT}`, {
       method: "GET",
-      headers: auth?.token ? { Authorization: `Bearer ${auth.token}` } : {},
+      credentials: "include",
     })
       .then((response) => response.json())
       .then((activities) => setActivities(activities.activities));
-  }, [auth]);
+  }, []);
 
   return (
     <section className="publication-page">

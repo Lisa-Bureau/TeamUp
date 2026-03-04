@@ -34,7 +34,7 @@ function ActivityDetails() {
     if (!auth || !participants.length) return;
 
     const isParticipant = participants.find(
-      (participant) => participant.userId === auth.user.id,
+      (participant) => participant.userId === auth.id,
     );
 
     if (isParticipant?.status === "accepted") {
@@ -93,7 +93,7 @@ function ActivityDetails() {
     activity: Activity,
     nbAvailableSpots: number,
   ) => {
-    if (!auth?.user) {
+    if (!auth) {
       navigate("/sign-in");
       return;
     }
@@ -102,7 +102,7 @@ function ActivityDetails() {
     setReservationStatus("loading");
 
     const newParticipant = {
-      userId: auth.user.id,
+      userId: auth.id,
       activityId: activity.id,
       status: activity.auto_validation ? "accepted" : "request",
     };
@@ -114,8 +114,8 @@ function ActivityDetails() {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${auth.token}`,
           },
+          credentials: "include",
           body: JSON.stringify(newParticipant),
         },
       );
