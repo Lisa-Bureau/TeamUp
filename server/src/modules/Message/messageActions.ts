@@ -1,8 +1,7 @@
 import type { RequestHandler } from "express";
-import MessageRepository from "./messageRepository";
 import LongPollManager from "../../services/longPolling";
-import messageRepository from "./messageRepository";
 import { StatusCodes } from "http-status-codes";
+import messageRepository from "./messageRepository";
 
 const browse: RequestHandler = async (req, res, next) => {
   const userId = Number(req.auth.sub);
@@ -10,7 +9,7 @@ const browse: RequestHandler = async (req, res, next) => {
   const activityId = Number(req.query.activityId);
 
   try {
-    const [messages] = await MessageRepository.read(userId, activityId);
+    const [messages] = await messageRepository.read(userId, activityId);
 
     res.status(StatusCodes.OK).json(messages);
   } catch (err) {
@@ -22,7 +21,7 @@ const add: RequestHandler = async (req, res, next) => {
   const { userId, activityId, content } = req.body;
 
   try {
-    const [result] = await MessageRepository.create(
+    const [result] = await messageRepository.create(
       userId,
       activityId,
       content,
@@ -34,7 +33,7 @@ const add: RequestHandler = async (req, res, next) => {
         .json({ message: "Message Cannot be created" });
     }
 
-    const [message] = await MessageRepository.readSingle(result.insertId);
+    const [message] = await messageRepository.readSingle(result.insertId);
     const newMessage = message[0];
 
     LongPollManager.notifyWaiting(activityId.toString(), newMessage as Message);
@@ -115,7 +114,7 @@ const addLike: RequestHandler = async (req, res, next) => {
 const deleteMessage: RequestHandler = async (req, res, next) => {
   const { userId, messageId } = req.body;
 
-  const [deleteResult] = await MessageRepository.delete(userId, messageId);
+  const [deleteResult] = await messageRepository.delete(userId, messageId);
 
   if (deleteResult.affectedRows === 0) {
     res.status(StatusCodes.NOT_FOUND).json({ error: "Message not found" });
