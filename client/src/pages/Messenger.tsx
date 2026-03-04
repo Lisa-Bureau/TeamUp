@@ -27,13 +27,10 @@ function Messenger() {
   useEffect(() => {
     const load = async () => {
       const res = await fetch(
-        `${import.meta.env.VITE_API_URL}/api/participations?userId=${auth?.user.id}`,
+        `${import.meta.env.VITE_API_URL}/api/participations`,
         {
           method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${auth?.token}`,
-          },
+          headers: auth?.token ? { Authorization: `Bearer ${auth.token}` } : {},
         },
       );
       const data: UsersActivities[] = await res.json();
@@ -79,14 +76,7 @@ function Messenger() {
                 <h2>{a.sport_name}</h2>
                 <div className="sub-chat">
                   <p>{a.city}</p>
-                  <p
-                    className="message-date"
-                    style={
-                      a.id === selectedActivity?.id
-                        ? { color: "var(--light-color)" }
-                        : {}
-                    }
-                  >
+                  <p className="message-date">
                     {formatMessageTime(a.playing_at)}
                   </p>
                 </div>

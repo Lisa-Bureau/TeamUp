@@ -236,6 +236,7 @@ function SignUp() {
               marginBottom: "2rem",
               fontSize: "button-mobile",
               borderRadius: "10px",
+              color: "var(--dark-color)",
               backgroundColor: "var(--button-color)",
               "&:hover": {
                 backgroundColor:

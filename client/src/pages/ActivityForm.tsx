@@ -220,6 +220,7 @@ function ActivityForm() {
               />
               <input
                 type="text"
+                aria-label="sport"
                 placeholder="Sport *"
                 value={sportSearch}
                 onChange={(e) => {
@@ -249,6 +250,7 @@ function ActivityForm() {
             <img src="./icons/pin-input.svg" alt="" width="24" height="24" />
             <input
               type="text"
+              aria-label="Address"
               placeholder="Adresse *"
               ref={addressRef}
               required
@@ -260,6 +262,7 @@ function ActivityForm() {
               <img src="./icons/pin-input.svg" alt="" width="24" height="24" />
               <input
                 type="text"
+                aria-label="zip-code"
                 placeholder="Code postal *"
                 ref={zipCodeRef}
                 required
@@ -268,7 +271,13 @@ function ActivityForm() {
 
             <div className="input-with-icon">
               <img src="./icons/pin-input.svg" alt="" width="24" height="24" />
-              <input type="text" placeholder="Ville *" ref={cityRef} required />
+              <input
+                type="text"
+                aria-label="city"
+                placeholder="Ville *"
+                ref={cityRef}
+                required
+              />
             </div>
           </div>
 
@@ -282,6 +291,7 @@ function ActivityForm() {
               />
               <input
                 type="date"
+                aria-label="date"
                 min={new Date().toISOString().split("T")[0]}
                 value={playingAt}
                 onChange={(e) => setPlayingAt(e.target.value)}
@@ -299,6 +309,7 @@ function ActivityForm() {
               />
               <input
                 type="time"
+                aria-label="time"
                 value={playingTime}
                 onChange={(e) => setPlayingTime(e.target.value)}
                 required
@@ -317,6 +328,7 @@ function ActivityForm() {
               />
               <input
                 type="number"
+                aria-label="duration"
                 placeholder="Durée (min) *"
                 ref={playingDurationRef}
                 required
@@ -336,6 +348,7 @@ function ActivityForm() {
                 />
                 <input
                   type="number"
+                  aria-label="number spots"
                   placeholder="Nombre de places *"
                   ref={nbPlacesRef}
                   required
@@ -378,6 +391,7 @@ function ActivityForm() {
                   />
                   <input
                     type="number"
+                    aria-label="price"
                     placeholder="Prix (€)"
                     value={price}
                     onChange={(e) => setPrice(e.target.value)}
@@ -392,6 +406,7 @@ function ActivityForm() {
 
             <textarea
               placeholder="Description ..."
+              aria-label="description"
               ref={descriptionRef}
               rows={4}
             />
@@ -563,7 +578,7 @@ function ActivityForm() {
                 </label>
               </fieldset>
               <fieldset className="criteria-desktop-column">
-                <legend>Type de sport</legend>
+                <legend>Accessibilité</legend>
                 <label>
                   Handisport
                   <input
@@ -863,7 +878,7 @@ function ActivityForm() {
             <hr className="criteria-divider" />
 
             <fieldset className="criteria-fieldset">
-              <legend>Type de sport</legend>
+              <legend>Accessibilité</legend>
               <div className="criteria-group">
                 <label className="criteria-label">
                   Handisport

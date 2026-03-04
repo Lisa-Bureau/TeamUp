@@ -20,7 +20,7 @@
   }
 
   .message-error {
-    color: var(--refused-color);
+    color: var(--invalid-color);
     font-family: var(--body-highlight-font);
     font-size: var(--body-size);
     text-align: center;

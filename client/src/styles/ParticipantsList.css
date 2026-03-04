@@ -70,12 +70,12 @@ ul.participant-list li p.pending {
 
 ul.participant-list li p.refused,
 ul.participant-list li button.btn-refused {
-  background-color: var(--refused-color);
+  background-color: var(--invalid-color);
 }
 
 ul.participant-list li p.accepted,
 ul.participant-list li button.btn-accepted {
-  background-color: var(--input-color);
+  background-color: var(--valid-color);
 }
 
 ul.participant-list li p.pending {
@@ -84,7 +84,7 @@ ul.participant-list li p.pending {
 
 ul.participant-list li button {
   border: none;
-  background-color: var(--refused-color);
+  background-color: var(--invalid-color);
   color: var(--light-color);
   width: 75px;
   height: 18px;
@@ -138,7 +138,7 @@ ul.participant-list li button {
 }
 
 .guest-error {
-  border: 1px solid var(--refused-color);
+  border: 1px solid var(--invalid-color);
 }
 
 .guest-inviting input {
@@ -161,7 +161,7 @@ ul.participant-list li button {
 }
 
 .username-refused {
-  fill: var(--refused-color);
+  fill: var(--invalid-color);
 }
 
 ul.participant-list li p img {
@@ -187,14 +187,14 @@ ul.participant-list li p img.vector {
 }
 
 .error-text {
-  color: var(--refused-color);
+  color: var(--invalid-color);
   font-family: var(--body-font);
   font-size: var(--tag-size);
   text-align: center;
   line-height: 0;
   padding: 12px;
   background-color: rgba(230, 57, 70, 0.1);
-  border: 1px solid var(--refused-color);
+  border: 1px solid var(--invalid-color);
   border-radius: 10px;
   margin: 0 auto 5px auto;
   width: 256px;
@@ -214,7 +214,7 @@ ul.participant-list li p img.vector {
 
   ul.participant-list li button {
     border: none;
-    background-color: var(--refused-color);
+    background-color: var(--invalid-color);
     color: var(--light-color);
     width: 75px;
     height: 28px;

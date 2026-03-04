@@ -96,6 +96,7 @@ function SearchBar({ setFilters, filters }: SearchBarProps) {
           <input
             className={`${error.sport ? "error-input" : ""}`}
             type="text"
+            aria-label="Search sport"
             placeholder="Rechercher une activité..."
             required
             value={activitiesOnDropdown.sport}
@@ -139,6 +140,7 @@ function SearchBar({ setFilters, filters }: SearchBarProps) {
           <input
             className={`${error.city ? "error-input" : ""}`}
             type="text"
+            aria-label="Search city"
             placeholder="Ville ?"
             required
             value={activitiesOnDropdown.city}
@@ -170,6 +172,7 @@ function SearchBar({ setFilters, filters }: SearchBarProps) {
           <img src="/icons/calendar-input.svg" alt="Calendrier" />
           <input
             type="date"
+            aria-label="Search date"
             required
             min={new Date().toISOString().split("T")[0]}
             onChange={searchPlayingAt}

@@ -78,6 +78,7 @@ function Carousel({ activities, renderActivity }: CarouselProps) {
           <button
             key={item.id}
             type="button"
+            aria-label="next activity"
             className={index === selectedIndex ? "active" : ""}
           />
         ))}

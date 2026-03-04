@@ -67,7 +67,7 @@ function ActivityTabs({ selectedTab, setSelectedTab }: SegmentedControlProps) {
 
             "& .MuiTab-root.Mui-selected": {
               backgroundColor: "var(--button-color)",
-              color: "var(--light-color)",
+              color: "var(--dark-color)",
               boxShadow: "inset 0 4px 4px 0 rgba(0,0,0,0.25)",
               borderRadius:
                 selectedTab === "incoming"

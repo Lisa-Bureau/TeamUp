@@ -83,6 +83,7 @@
     svg {
       width: 28px;
       height: 28px;
+      fill: var(--dark-color);
     }
 
     &.link-publication-active {

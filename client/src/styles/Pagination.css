@@ -33,7 +33,6 @@
 
     &.active {
       background-color: var(--button-color);
-      color: var(--light-color);
     }
   }
 }

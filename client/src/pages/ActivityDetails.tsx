@@ -352,7 +352,9 @@ function ActivityDetails() {
           ? "Déjà inscrit"
           : nbAvailableSpots <= 0
             ? "Complet"
-            : "Réserver"}
+            : activity.auto_validation
+              ? "Réserver"
+              : "Demande de réservation"}
       </button>
     </section>
   );

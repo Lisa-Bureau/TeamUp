@@ -1,48 +1,48 @@
 @font-face {
-  font-family: "heading-mobile";
+  font-family: "heading";
   src: url(../assets/fonts/Poppins/Poppins-SemiBold.ttf) format("truetype");
 }
 
 @font-face {
-  font-family: "title-mobile";
+  font-family: "title";
   src: url(../assets/fonts/Poppins/Poppins-SemiBold.ttf) format("truetype");
 }
 
 @font-face {
-  font-family: "button-mobile";
+  font-family: "button";
   src: url(../assets/fonts/Poppins/Poppins-Medium.ttf) format("truetype");
 }
 
 @font-face {
-  font-family: "body-highlight-mobile";
+  font-family: "body-highlight";
   src: url(../assets/fonts/Inter/Inter_24pt-Medium.ttf) format("truetype");
 }
 
 @font-face {
-  font-family: "body-mobile";
+  font-family: "body";
   src: url(../assets/fonts/Inter/Inter_24pt-Regular.ttf) format("truetype");
 }
 
 @font-face {
-  font-family: "tag-mobile";
+  font-family: "tag";
   src: url(../assets/fonts/Inter/Inter_24pt-Regular.ttf) format("truetype");
 }
 
 :root {
-  --heading-font: "heading-mobile", sans-serif;
-  --title-font: "title-mobile", sans-serif;
-  --button-font: "button-mobile", sans-serif;
-  --body-highlight-font: "body-highlight-mobile", sans-serif;
-  --body-font: "body-mobile", sans-serif;
-  --tag-font: "tag-mobile", sans-serif;
+  --heading-font: "heading", sans-serif;
+  --title-font: "title", sans-serif;
+  --button-font: "button", sans-serif;
+  --body-highlight-font: "body-highlight", sans-serif;
+  --body-font: "body", sans-serif;
+  --tag-font: "tag", sans-serif;
 
   --light-color: rgb(250, 250, 250);
   --dark-color: rgb(46, 46, 46);
   --neutral-color: rgb(226, 226, 226);
   --accent-color: rgb(108, 92, 231);
   --button-color: rgb(242, 183, 5);
-  --input-color: rgb(0, 189, 125);
-  --refused-color: rgb(230, 57, 70);
+  --valid-color: rgb(0, 189, 125);
+  --invalid-color: rgb(230, 57, 70);
 
   --heading-size: 18px;
   --title-size: 16px;
@@ -54,7 +54,7 @@
   --title-desktop-size: 20px;
   --button-desktop-size: 16px;
   --body-desktop-size: 14px;
-  --tag-desktop-size: 10px;
+  --tag-desktop-size: 11px;
 }
 
 [data-mode="light"] {
@@ -63,7 +63,7 @@
   --neutral-color: rgb(226, 226, 226);
   --accent-color: rgb(108, 92, 231);
   --button-color: rgb(242, 183, 5);
-  --input-color: rgb(0, 189, 125);
+  --valid-color: rgb(0, 189, 125);
 }
 
 [data-mode="dark"] {
@@ -72,5 +72,5 @@
   --neutral-color: rgb(60, 60, 60);
   --accent-color: rgb(130, 115, 255);
   --button-color: rgb(255, 196, 25);
-  --input-color: rgb(0, 209, 155);
+  --valid-color: rgb(0, 209, 155);
 }

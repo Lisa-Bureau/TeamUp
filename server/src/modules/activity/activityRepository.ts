@@ -52,11 +52,11 @@ class ActivityRepository {
     }
 
     if (sort === "recent") {
-      orderBy = "a.playing_at DESC";
+      orderBy = "a.playing_at ASC";
     }
 
     if (sort === "oldest") {
-      orderBy = "a.playing_at ASC";
+      orderBy = "a.playing_at DESC";
     }
 
     if (sort === "price") {
@@ -117,7 +117,8 @@ class ActivityRepository {
       JOIN user AS u ON u.id = a.user_id 
       JOIN sport AS s ON s.id = a.sport_id 
       WHERE a.visibility = 1
-      ${query}`,
+      ${query}
+      AND a.playing_at >= CURDATE()`,
       [...params],
     );
 

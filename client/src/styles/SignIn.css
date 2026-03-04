@@ -13,7 +13,7 @@
   gap: 1.5rem;
 
   & > p {
-    color: var(--refused-color);
+    color: var(--invalid-color);
     font-family: var(--body-highlight-font);
     font-size: var(--body-size);
   }
@@ -29,7 +29,7 @@
   font-size: var(--button-size);
   border: none;
   background-color: var(--button-color);
-  color: var(--light-color);
+  color: var(--dark-color);
   height: 2rem;
   width: 6rem;
   padding: 10px;
@@ -43,7 +43,7 @@
   width: 100%;
 
   & input {
-    border: 1px solid var(--input-color);
+    border: 1px solid var(--valid-color);
     border-radius: 8px;
     height: 37px;
     padding-left: 30px;

@@ -19,7 +19,7 @@ const browseByActivity: RequestHandler = async (req, res, next) => {
 
 const browseUserActivity: RequestHandler = async (req, res, next) => {
   try {
-    const userId = Number(req.query.userId);
+    const userId = req.auth?.sub ? Number(req.auth.sub) : null;
 
     if (!userId) {
       res.status(400).json({ message: "UserId is required" });

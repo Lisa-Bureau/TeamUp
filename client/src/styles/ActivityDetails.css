@@ -89,13 +89,12 @@
   font-family: var(--body-highlight-font);
   font-size: var(--body-size);
   white-space: nowrap;
-  background-color: var(--accent-color);
   color: var(--light-color);
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 
 .price-tag-card.free {
-  background-color: var(--accent-color);
+  background-color: var(--valid-color);
 }
 
 .price-tag-card.paid {
@@ -298,7 +297,7 @@
   left: 0;
   top: 0;
   height: 100%;
-  background-color: var(--input-color);
+  background-color: var(--valid-color);
   border-radius: 10px;
   width: var(--size);
 }
@@ -308,7 +307,7 @@
 }
 
 .full {
-  background-color: var(--refused-color);
+  background-color: var(--invalid-color);
 }
 
 .spots-bar p {
@@ -499,12 +498,13 @@
   border: none;
   border-radius: 10px;
   background: var(--button-color);
-  color: var(--light-color);
+  color: var(--dark-color);
   font-family: var(--heading-font);
   font-size: var(--title-size);
   cursor: pointer;
   -webkit-appearance: none;
   appearance: none;
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
 }
 
 .reserve-button:disabled {

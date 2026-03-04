@@ -222,7 +222,7 @@ function SearchFilters({ filters, setFilters, onClose }: SearchFilterProps) {
         <hr className="criteria-divider" />
 
         <fieldset className="criteria-fieldset">
-          <legend>Type de Sport</legend>
+          <legend>Accessibilité</legend>
           <div className="criteria-group">
             <label className="criteria-label">
               Handisport

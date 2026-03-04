@@ -92,7 +92,8 @@
   }
 
   & .free {
-    background-color: var(--input-color);
+    background-color: var(--valid-color);
+    color: var(--dark-color);
   }
 
   & .paid {
@@ -219,7 +220,7 @@
 .overlay-img {
   width: 100%;
   height: 4rem;
-  background: linear-gradient(to top, rgba(46, 46, 46, 0.95), rgba(0, 0, 0, 0));
+  background: linear-gradient(to top, rgba(46, 46, 46, 1), rgba(0, 0, 0, 0));
   position: absolute;
   top: 3rem;
   left: 0;
@@ -247,7 +248,7 @@
   display: flex;
   justify-content: space-evenly;
   align-items: center;
-  background-color: var(--input-color);
+  background-color: var(--valid-color);
 }
 
 .important-info {
@@ -387,7 +388,7 @@
   & > .progress-bar {
     height: 5px;
     border-radius: 4px;
-    background-color: var(--input-color);
+    background-color: var(--valid-color);
     width: var(--size);
     transform-origin: 0%;
     animation: progress-bar-anim 0.5s 0.5s both;
@@ -397,7 +398,7 @@
     }
 
     &.full {
-      background-color: var(--refused-color);
+      background-color: var(--invalid-color);
     }
   }
 }
@@ -449,7 +450,7 @@
     font-size: var(--button-size);
     border: none;
     background-color: var(--button-color);
-    color: var(--light-color);
+    color: var(--dark-color);
     height: 1.5rem;
     width: 6rem;
     border-radius: 10px;
@@ -572,11 +573,11 @@
 }
 
 .refuse-button {
-  background-color: var(--refused-color);
+  background-color: var(--invalid-color);
 }
 
 .accept-button {
-  background-color: var(--input-color);
+  background-color: var(--valid-color);
 }
 
 @media (min-width: 1024px) {

@@ -5,6 +5,7 @@
   font-family: var(--body-font);
   font-size: var(--body-desktop-size);
 }
+
 @media (max-width: 780px) {
   .messanger-layout {
     font-size: var(--body-size);
@@ -64,7 +65,7 @@
 
 .selected-chat {
   background-color: var(--button-color);
-  color: var(--light-color);
+  color: var(--dark-color);
 }
 
 .sport-img {
@@ -125,19 +126,19 @@
   gap: 1rem;
   margin: 1rem 0;
   padding: 0.4rem 1rem;
-  border: 1px solid var(--input-color);
+  border: 1px solid var(--valid-color);
   font-family: var(--body-font);
   width: 100%;
 }
 
 .users-message {
-  border-right: 2px solid var(--input-color);
+  border-right: 2px solid var(--valid-color);
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
 }
 
 .others-messages {
-  border-left: 2px solid var(--input-color);
+  border-left: 2px solid var(--valid-color);
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
 }
@@ -232,18 +233,14 @@
   border-radius: 12px;
   border: none;
   outline: none;
-
-  border: 1px solid var(--input-color);
+  border: 1px solid var(--valid-color);
   border-radius: 10px;
   background-color: var(--light-color);
-
   font-size: 0.95rem;
   line-height: 1.4;
   resize: none;
-
   box-sizing: border-box;
   overflow-y: auto;
-
   margin-bottom: 6rem;
 }
 

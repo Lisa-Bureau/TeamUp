@@ -6,10 +6,10 @@ export const muiTheme = createTheme({
       styleOverrides: {
         root: {
           "& .MuiOutlinedInput-notchedOutline": {
-            borderColor: "var(--input-color)",
+            borderColor: "var(--valid-color)",
           },
           "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-            borderColor: "var(--input-color)",
+            borderColor: "var(--valid-color)",
           },
         },
       },
@@ -19,7 +19,7 @@ export const muiTheme = createTheme({
       styleOverrides: {
         root: {
           "&.Mui-focused": {
-            color: "var(--input-color)",
+            color: "var(--valid-color)",
           },
         },
       },

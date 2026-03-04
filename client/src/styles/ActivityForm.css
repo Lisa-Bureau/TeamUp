@@ -43,7 +43,7 @@
   right: 0;
   margin-top: 4px;
   background-color: var(--light-color);
-  border: 1px solid var(--input-color);
+  border: 1px solid var(--valid-color);
   border-radius: 10px;
   max-height: 380px;
   overflow-y: auto;
@@ -89,15 +89,15 @@
   align-items: center;
   gap: 4px;
   padding: 12px 8px;
-  border: 1px solid var(--input-color);
+  border: 1px solid var(--valid-color);
   border-radius: 10px;
   background-color: var(--light-color);
-  color: var(--input-color);
+  color: var(--valid-color);
 }
 
 .input-with-icon svg {
   flex-shrink: 0;
-  color: var(--input-color);
+  color: var(--valid-color);
 }
 
 .input-with-icon input,
@@ -122,12 +122,12 @@
 }
 
 .input-with-icon:focus-within {
-  border-color: var(--input-color);
+  border-color: var(--valid-color);
   box-shadow: 0 0 0 2px rgba(0, 189, 125, 0.2);
 }
 
 .input-with-icon:focus-within svg {
-  color: var(--input-color);
+  color: var(--valid-color);
 }
 
 .input-with-icon.disabled {
@@ -244,7 +244,7 @@
   justify-content: space-between;
   gap: 8px;
   padding: 0 16px;
-  border: 1px solid var(--input-color);
+  border: 1px solid var(--valid-color);
   border-radius: 10px;
   background-color: var(--light-color);
   width: 260px;
@@ -342,7 +342,7 @@
   width: 102px;
   height: 37px;
   padding: 0 8px;
-  border: 1px solid var(--input-color);
+  border: 1px solid var(--valid-color);
   border-radius: 10px;
   background-color: var(--light-color);
   box-sizing: border-box;
@@ -373,7 +373,7 @@
 
 .publication-form textarea {
   padding: 14px 18px;
-  border: 1px solid var(--input-color);
+  border: 1px solid var(--valid-color);
   border-radius: 20px;
   font-family: var(--body-font);
   font-size: var(--body-size);
@@ -389,7 +389,7 @@
 }
 
 .publication-form textarea:focus {
-  border-color: var(--input-color);
+  border-color: var(--valid-color);
   box-shadow: 0 0 0 2px rgba(0, 189, 125, 0.2);
 }
 
@@ -422,7 +422,7 @@ fieldset {
 .radio-group input[type="radio"] {
   width: 20px;
   height: 20px;
-  accent-color: var(--input-color);
+  accent-color: var(--valid-color);
   margin: 0;
   padding: 0;
 }
@@ -446,7 +446,7 @@ fieldset {
 .checkbox-group input[type="checkbox"] {
   width: 20px;
   height: 20px;
-  accent-color: var(--input-color);
+  accent-color: var(--valid-color);
   margin: 0;
 }
 
@@ -455,7 +455,7 @@ fieldset {
   height: 24px;
   padding: 0;
   background-color: var(--button-color);
-  color: var(--light-color);
+  color: var(--dark-color);
   border: none;
   border-radius: 10px;
   font-family: "Inter", sans-serif;
@@ -478,7 +478,7 @@ fieldset {
   height: 32px;
   padding: 0;
   background-color: var(--button-color);
-  color: var(--light-color);
+  color: var(--dark-color);
   border: none;
   border-radius: 10px;
   font-family: var(--button-font);
@@ -519,7 +519,7 @@ fieldset {
   align-items: center;
   gap: 8px;
   padding: 0 8px;
-  border: 1px solid var(--input-color);
+  border: 1px solid var(--valid-color);
   border-radius: 10px;
   background-color: var(--light-color);
   width: 185px;
@@ -527,17 +527,17 @@ fieldset {
   position: relative;
 
   & > .username-accepted {
-    fill: var(--input-color);
+    fill: var(--valid-color);
   }
 
   & > .username-refused {
-    fill: var(--refused-color);
+    fill: var(--invalid-color);
   }
 }
 
 .error-detected {
   border-radius: 10px 10px 0 0;
-  border: 1px solid var(--refused-color);
+  border: 1px solid var(--invalid-color);
 }
 
 .guest-input-display span {
@@ -576,22 +576,22 @@ fieldset {
 }
 
 .btn-add-guest {
-  background-color: var(--input-color);
+  background-color: var(--valid-color);
 }
 
 .btn-remove-guest {
-  background-color: var(--input-color);
+  background-color: var(--valid-color);
 }
 
 .error-message-add-guest {
-  color: var(--refused-color);
+  color: var(--invalid-color);
   font-family: var(--body-font);
   font-size: var(--tag-size);
   text-align: center;
   line-height: 0;
   padding: 12px;
   background-color: rgba(230, 57, 70, 0.1);
-  border: 1px solid var(--refused-color);
+  border: 1px solid var(--invalid-color);
   border-radius: 0 0 10px 10px;
   width: 185px;
   height: 5px;
@@ -613,7 +613,7 @@ fieldset {
 }
 
 .error-message {
-  color: var(--refused-color);
+  color: var(--invalid-color);
   font-family: var(--body-font);
   font-size: var(--body-size);
   text-align: center;
@@ -676,7 +676,7 @@ fieldset {
 .publication-success h2 {
   font-family: var(--heading-font);
   font-size: var(--heading-size);
-  color: var(--input-color);
+  color: var(--valid-color);
   margin-bottom: 16px;
 }
 
@@ -820,7 +820,7 @@ fieldset {
 
 .btn-validate {
   background-color: var(--button-color);
-  color: var(--light-color);
+  color: var(--dark-color);
   font-family: var(--button-font);
   font-size: var(--button-size);
   padding: 6px 24px;
@@ -982,7 +982,7 @@ fieldset {
     width: 102px;
     height: 46px;
     padding: 0 8px;
-    border: 1px solid var(--input-color);
+    border: 1px solid var(--valid-color);
     border-radius: 10px;
     background-color: var(--light-color);
     box-sizing: border-box;
