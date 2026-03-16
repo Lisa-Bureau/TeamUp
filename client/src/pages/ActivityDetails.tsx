@@ -94,7 +94,7 @@ function ActivityDetails() {
     nbAvailableSpots: number,
   ) => {
     if (!auth) {
-      navigate("/sign-in");
+      navigate("/login");
       return;
     }
 
@@ -343,9 +343,7 @@ function ActivityDetails() {
       <button
         type="button"
         className="reserve-button"
-        onClick={() =>
-          makeReservation(activity, activity.nb_spots - activity.nb_participant)
-        }
+        onClick={() => makeReservation(activity, nbAvailableSpots)}
         disabled={nbAvailableSpots <= 0}
       >
         {reservationStatus === "already"

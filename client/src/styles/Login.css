@@ -1,4 +1,4 @@
-.signin-container {
+.Login-container {
   margin-top: 3rem;
   display: flex;
   flex-direction: column;
@@ -6,7 +6,7 @@
   gap: 2rem;
 }
 
-.signin-form {
+.Login-form {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -19,7 +19,7 @@
   }
 }
 
-.signin-form label {
+.Login-form label {
   font-family: var(--body-font);
   font-size: var(--title-size);
 }
@@ -39,7 +39,7 @@
   align-items: center;
 }
 
-.signin-container div {
+.Login-container div {
   width: 100%;
 
   & input {
@@ -66,18 +66,18 @@
 }
 
 @media (min-width: 1024px) {
-  .signin-form {
+  .Login-form {
     & > p {
       font-size: var(--body-desktop-size);
     }
   }
 
-  .signin-container {
+  .Login-container {
     width: 100vw;
     margin-top: 3rem;
   }
 
-  .signin-container div input {
+  .Login-container div input {
     font-size: var(--body-desktop-size);
   }
 

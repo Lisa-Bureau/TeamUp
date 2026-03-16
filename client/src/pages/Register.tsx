@@ -2,7 +2,7 @@ import { Box, Button, TextField } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
 import { muiTheme } from "../theme/muiTheme";
 import { useState } from "react";
-import "../styles/SignUp.css";
+import "../styles/Register.css";
 import { Link, useNavigate } from "react-router";
 import toast from "react-hot-toast";
 
@@ -10,7 +10,7 @@ type NewUser = Omit<User, "id"> & {
   confirmPassword: string;
 };
 
-function SignUp() {
+function Register() {
   const [user, setUser] = useState<NewUser>({
     username: "",
     password: "",
@@ -27,6 +27,7 @@ function SignUp() {
   });
 
   const navigate = useNavigate();
+
   const [error, setError] = useState({
     field: "",
     message: "",
@@ -56,9 +57,9 @@ function SignUp() {
             : setError((prev) => ({ ...prev, message: "Erreur serveur" }));
         return;
       }
-      navigate("/sign-in", {
+      navigate("/login", {
         state: {
-          from: "/sign-up",
+          from: "/register",
         },
       });
       setTimeout(() => {
@@ -71,6 +72,7 @@ function SignUp() {
       }));
     }
   };
+
   const ChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setUser((prev) => ({
@@ -83,7 +85,7 @@ function SignUp() {
   };
 
   return (
-    <div id="sign-up">
+    <div id="register">
       <h1>CRÉER UN COMPTE</h1>
       <ThemeProvider theme={muiTheme}>
         <Box
@@ -250,7 +252,7 @@ function SignUp() {
       </ThemeProvider>
       <p className="link-to">
         Si vous êtes déjà inscrit :{" "}
-        <Link to="/sign-in" state={{ from: "/sign-up" }}>
+        <Link to="/login" state={{ from: "/register" }}>
           Cliquez ici !
         </Link>
       </p>
@@ -258,4 +260,4 @@ function SignUp() {
   );
 }
 
-export default SignUp;
+export default Register;

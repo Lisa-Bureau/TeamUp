@@ -181,20 +181,17 @@ function GroupChat({ activity: activityProp }: groupChatType) {
 
   const deleteMessage = async (m: MessageType) => {
     try {
-      const res = await fetch(
-        `${import.meta.env.VITE_API_URL}/api/message/delete`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          credentials: "include",
-          body: JSON.stringify({
-            userId: auth?.id,
-            messageId: m.id,
-          }),
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/message`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
         },
-      );
+        credentials: "include",
+        body: JSON.stringify({
+          userId: auth?.id,
+          messageId: m.id,
+        }),
+      });
       const messageDeleteStatus = await res.json();
 
       if (messageDeleteStatus.success) {

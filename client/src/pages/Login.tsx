@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router";
-import "../styles/SignIn.css";
+import "../styles/Login.css";
 import { useAuth } from "../context/AuthContext";
 import toast from "react-hot-toast";
 
-function SignIn() {
+function Login() {
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
@@ -43,7 +43,7 @@ function SignIn() {
 
       setAuth(user);
 
-      if (location.state?.from === "/sign-up") {
+      if (location.state?.from === "/register") {
         navigate("/");
       } else {
         navigate(-1);
@@ -60,9 +60,9 @@ function SignIn() {
 
   return (
     <>
-      <div className="signin-container">
+      <div className="Login-container">
         <h1>Connexion</h1>
-        <form onSubmit={(e) => login(e)} className="signin-form">
+        <form onSubmit={(e) => login(e)} className="Login-form">
           <div>
             <label htmlFor="email">Email</label>{" "}
             <input ref={emailRef} type="email" id="email" />
@@ -77,11 +77,11 @@ function SignIn() {
           </button>
         </form>
         <p className="link-to">
-          Si vous n'êtes pas inscrit : <Link to="/sign-up">Cliquez ici !</Link>
+          Si vous n'êtes pas inscrit : <Link to="/register">Cliquez ici !</Link>
         </p>
       </div>
     </>
   );
 }
 
-export default SignIn;
+export default Login;

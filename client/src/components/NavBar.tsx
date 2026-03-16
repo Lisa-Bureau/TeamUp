@@ -53,7 +53,7 @@ function NavBar() {
                 ? "navbar-link link-publication link-publication-active"
                 : "navbar-link link-publication"
             }
-            to={auth ? "/publication" : "/sign-in"}
+            to={auth ? "/publication" : "/login"}
           >
             <svg viewBox="0 0 28 28">
               <title>icon add</title>
@@ -82,7 +82,7 @@ function NavBar() {
           )}
           <NavLink
             className={match ? "navbar-link link-active" : "navbar-link"}
-            to={auth ? "/my-activities" : "/sign-in"}
+            to={auth ? "/my-activities" : "/login"}
           >
             <svg viewBox="0 0 27 27" className="icon-activities">
               <title>icon calendar</title>
@@ -94,7 +94,7 @@ function NavBar() {
             className={({ isActive }) =>
               isActive ? "navbar-link link-active" : "navbar-link"
             }
-            to={auth ? "/profile" : "/sign-in"}
+            to={auth ? "/profile" : "/login"}
           >
             <svg viewBox="0 0 22 22" className="icon-profile">
               <title>icon profile</title>

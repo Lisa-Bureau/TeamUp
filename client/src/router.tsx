@@ -4,12 +4,12 @@ import Activities from "./pages/Activities";
 import ActivityDetails from "./pages/ActivityDetails";
 import ActivityForm from "./pages/ActivityForm";
 import MyActivities from "./pages/MyActivities.tsx";
-import SignUp from "./pages/SignUp.tsx";
-import SignIn from "./pages/SignIn.tsx";
 import Profile from "./pages/Profile.tsx";
 import Home from "./pages/Home.tsx";
 import Messenger from "./pages/Messenger.tsx";
 import GroupChat from "./components/GroupChat.tsx";
+import Register from "./pages/Register.tsx";
+import Login from "./pages/Login.tsx";
 
 const router = createBrowserRouter([
   {
@@ -44,12 +44,12 @@ const router = createBrowserRouter([
         element: <GroupChat />,
       },
       {
-        path: "/sign-up",
-        element: <SignUp />,
+        path: "/register",
+        element: <Register />,
       },
       {
-        path: "/sign-in",
-        element: <SignIn />,
+        path: "/login",
+        element: <Login />,
       },
       {
         path: "/profile",

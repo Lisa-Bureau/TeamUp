@@ -51,6 +51,6 @@ router.post("/api/message", messageActions.add);
 router.post("/api/message/likes", messageActions.addLike);
 router.get("/api/message", messageActions.browse);
 router.get("/api/message/poll", messageActions.poll);
-router.put("/api/message/delete", messageActions.deleteMessage);
+router.delete("/api/message", messageActions.deleteMessage);
 
 export default router;

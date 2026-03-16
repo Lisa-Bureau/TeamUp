@@ -43,7 +43,7 @@ function Home() {
               </svg>
               <p>Explore</p>
             </Link>
-            <Link to={auth ? "/publication" : "/sign-in"}>
+            <Link to={auth ? "/publication" : "/login"}>
               <svg viewBox="0 0 28 28">
                 <title>icon add</title>
                 <g>

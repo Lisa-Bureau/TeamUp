@@ -28,11 +28,12 @@ const sortingCondition = [
 const excludeFromFilterTags = ["sport", "playingAt", "city"];
 
 function Activities() {
-  const { page } = useParams();
   const LIMIT = 10;
+  const { page } = useParams();
   const currentPage = Math.max(1, Number(page) || 1);
   const [activities, setActivities] = useState<Activity[]>([]);
   const [totalActivities, setTotalActivities] = useState(0);
+  const [totalPages, setTotalPages] = useState(1);
   const [filters, setFilters] = useState<Filters>({
     sport: "",
     playingAt: "",
@@ -45,7 +46,6 @@ function Activities() {
     price: null,
     disabled: false,
   });
-  const [totalPages, setTotalPages] = useState(1);
   const [sort, setSort] = useState("");
   const [sortOpen, setSortOpen] = useState(false);
   const navigate = useNavigate();
@@ -117,7 +117,6 @@ function Activities() {
       const activitiesResponse = await fetch(
         `${import.meta.env.VITE_API_URL}/api/activities?page=${currentPage}&limit=${LIMIT}&${queryString}`,
         {
-          method: "GET",
           credentials: "include",
         },
       );

@@ -45,7 +45,7 @@ function Profile() {
   }, [auth]);
 
   if (!auth) {
-    return <Navigate to="/sign-in" replace />;
+    return <Navigate to="/login" replace />;
   }
 
   if (!userProfile) {
