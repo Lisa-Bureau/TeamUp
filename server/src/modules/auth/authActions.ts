@@ -32,7 +32,7 @@ const logIn: RequestHandler = async (req, res, next) => {
     res.cookie("token", token, {
       httpOnly: true,
       sameSite: "lax",
-      secure: false, // ⚠️ true en production (HTTPS)
+      secure: false, // true en production (HTTPS)
       maxAge: 1000 * 60 * 60 * 12,
     });
 

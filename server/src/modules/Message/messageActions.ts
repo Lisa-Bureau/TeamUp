@@ -28,7 +28,7 @@ const add: RequestHandler = async (req, res, next) => {
     );
 
     if (result.affectedRows === 0) {
-      res
+      return res
         .status(StatusCodes.BAD_REQUEST)
         .json({ message: "Message Cannot be created" });
     }

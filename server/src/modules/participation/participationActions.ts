@@ -73,7 +73,7 @@ const add: RequestHandler = async (req, res, next) => {
 
 const editStatus: RequestHandler = async (req, res, next) => {
   try {
-    const { userId, activityId, status, participantUsername, type } = req.body;
+    const { userId, activityId, status, type } = req.body;
 
     const result = await ParticipationRepository.update(
       userId,

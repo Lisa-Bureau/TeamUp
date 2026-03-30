@@ -174,7 +174,7 @@ function Register() {
             />
           </div>
           <TextField
-            label="Addresse"
+            label="Adresse"
             required
             variant="outlined"
             size="small"
@@ -185,16 +185,6 @@ function Register() {
           />
           <div>
             <TextField
-              label="Ville"
-              required
-              variant="outlined"
-              size="small"
-              name="city"
-              value={user.city}
-              onChange={ChangeInput}
-              error={error.field === "city"}
-            />
-            <TextField
               label="Code postal"
               required
               variant="outlined"
@@ -203,6 +193,16 @@ function Register() {
               value={user.zip_code}
               onChange={ChangeInput}
               error={error.field === "zip_code"}
+            />
+            <TextField
+              label="Ville"
+              required
+              variant="outlined"
+              size="small"
+              name="city"
+              value={user.city}
+              onChange={ChangeInput}
+              error={error.field === "city"}
             />
           </div>
           <div>

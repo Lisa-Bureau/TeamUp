@@ -55,6 +55,7 @@
   padding: 0 8px 8px 8px;
   color: var(--light-color);
   position: relative;
+  cursor: pointer;
 
   & > .icon-lock {
     position: absolute;

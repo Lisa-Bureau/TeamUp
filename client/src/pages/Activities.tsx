@@ -13,7 +13,7 @@ const tagLabelTranslations = [
   { key: "toilet", label: "Toilettes" },
   { key: "air_conditioning", label: "Climatisation" },
   { key: "disabled", label: "Handisport" },
-  { key: "all", label: "Tout Niveu" },
+  { key: "all", label: "Tout Niveau" },
   { key: "beginner", label: "Débutant" },
   { key: "amateur", label: "Intermédiaire" },
   { key: "advanced", label: "Confirmé" },
@@ -131,12 +131,36 @@ function Activities() {
     fetchAndFilterActivities();
   }, [currentPage, filters, sort]);
 
+  useEffect(() => {
+    const mainElement = document.querySelector("main");
+    if (mainElement) {
+      mainElement.scrollTo({
+        top: 0,
+        left: 0,
+      });
+    }
+  });
+
   return (
     <>
       {!isMobile && <p className="tagline">Que recherchez-vous ?</p>}
       <section className="page-activities">
         <div className="activities-container">
           <SearchBar setFilters={setFilters} filters={filters} />
+          <div className="filter-tag-container">
+            {filterTags.map(({ key, value }) => (
+              <button
+                type="button"
+                className="criteria-tag filter-tags"
+                key={key}
+                onClick={() => removeTag(key)}
+              >
+                {" "}
+                {value}
+                {"  ✕"}
+              </button>
+            ))}
+          </div>
           <div className="header-activity">
             <h1>Activités disponibles</h1>
             <div className="result-wrapper">
@@ -212,20 +236,7 @@ function Activities() {
               )}
             </div>
           </div>
-          <div className="filter-tag-container">
-            {filterTags.map(({ key, value }) => (
-              <button
-                type="button"
-                className="criteria-tag filter-tags"
-                key={key}
-                onClick={() => removeTag(key)}
-              >
-                {" "}
-                {value}
-                {"  ✕"}
-              </button>
-            ))}
-          </div>
+
           <section className="cards-activity">
             {totalActivities ? (
               activities.map((activity) => (

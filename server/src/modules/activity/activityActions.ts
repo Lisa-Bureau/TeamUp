@@ -16,6 +16,7 @@ const add: RequestHandler = async (req, res, next) => {
     }
 
     const activityId = await activityRepository.create(activity);
+
     const newsParticipants = guests.map((guest: Partial<User>) => ({
       userId: guest.id,
       activityId: activityId,
@@ -59,8 +60,6 @@ const browse: RequestHandler = async (req, res, next) => {
     res.json({
       activities: activities,
       pagination: {
-        page,
-        limit,
         totalActivities,
         totalPages,
       },

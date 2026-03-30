@@ -138,7 +138,8 @@ class ActivityRepository {
       FROM activity AS a
       JOIN user AS u ON u.id = a.user_id
       JOIN sport AS s ON s.id = a.sport_id
-      JOIN participation AS p ON p.activity_id = a.id AND p.user_id = ? JOIN user AS u2 ON p.user_id = u2.id
+      JOIN participation AS p ON p.activity_id = a.id AND p.user_id = ?
+      JOIN user AS u2 ON p.user_id = u2.id
       WHERE a.id = ?`,
       [userId, activityId],
     );

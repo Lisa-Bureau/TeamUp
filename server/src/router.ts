@@ -20,6 +20,7 @@ router.get("/api/participants", participationActions.browseByActivity);
 
 router.get("/api/me", authActions.verifyToken, userActions.read);
 router.post("/api/login", authActions.logIn);
+
 router.post("/api/logout", authActions.logout);
 
 // routes semi-protégées (change de comportement en fonction de l'état de connexion)
