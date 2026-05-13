@@ -4,6 +4,7 @@ import { StatusCodes } from "http-status-codes";
 import ParticipantsList from "./ParticipantsList";
 import toast from "react-hot-toast";
 import { useAuth } from "../context/AuthContext";
+import { useRef } from "react";
 
 type ActivityCardType = {
   activity: Activity;
@@ -68,6 +69,18 @@ function ActivityCard({
     } catch (err) {
       console.error(err);
     }
+  };
+
+  // Open and close the modal to confirm that you wish to cancel your participation in the activity
+
+  const annulationModalRef = useRef<HTMLDialogElement>(null);
+
+  const openAnnulationModal = () => {
+    annulationModalRef.current?.showModal();
+  };
+
+  const closeAnnulationModal = () => {
+    annulationModalRef.current?.close();
   };
 
   return (
@@ -173,11 +186,37 @@ function ActivityCard({
               <p>{activity.username}</p>
             </div>
             {selectedTab === "incoming" && (
-              <img
-                src="/icons/check.png"
-                alt="validate"
-                className="tag-status"
-              />
+              <>
+                <div className="participation-activity">
+                  <img src="/icons/check.png" alt="validate" />
+                  <button
+                    type="button"
+                    title="Annuler ma participation"
+                    onClick={openAnnulationModal}
+                  >
+                    X
+                  </button>
+                </div>
+                <dialog
+                  className="modal-annulation-participation"
+                  ref={annulationModalRef}
+                  onClick={(e) =>
+                    e.target === annulationModalRef.current &&
+                    closeAnnulationModal()
+                  }
+                  onKeyDown={(e) =>
+                    e.key === "Escape" && closeAnnulationModal()
+                  }
+                >
+                  <h2>Annuler votre participation à cette activité ?</h2>
+                  <div className="buttons-confirmation-annulation">
+                    <button type="button">Oui</button>
+                    <button type="button" onClick={closeAnnulationModal}>
+                      Non
+                    </button>
+                  </div>
+                </dialog>
+              </>
             )}
             {!selectedTab && (
               <button
@@ -222,11 +261,7 @@ function ActivityCard({
               )
             ) : selectedTab === "pending" &&
               activity.participation_status === "request" ? (
-              <img
-                src="/icons/hourglass.png"
-                alt="pending"
-                className="tag-status"
-              />
+              <img src="/icons/hourglass.png" alt="pending" />
             ) : (
               selectedTab === "pending" &&
               activity.participation_status === "refused" && (
