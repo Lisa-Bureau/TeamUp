@@ -49,6 +49,16 @@ class participationRepository {
 
     return result;
   }
+
+  async delete(userId: number, activityId: number) {
+    const [result] = await databaseClient.query<Result>(
+      `DELETE FROM participation
+        WHERE user_id = ? AND activity_id = ?`,
+      [userId, activityId],
+    );
+
+    return result;
+  }
 }
 
 export default new participationRepository();

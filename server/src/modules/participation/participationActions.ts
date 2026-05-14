@@ -108,9 +108,39 @@ const editStatus: RequestHandler = async (req, res, next) => {
   }
 };
 
+const deleteParticipation: RequestHandler = async (req, res, next) => {
+  try {
+    const { userId, activityId, selectedTab } = req.body;
+
+    const mailData = await activityRepository.readWithOrganizer(
+      activityId,
+      userId,
+    );
+
+    const result = await ParticipationRepository.delete(userId, activityId);
+
+    if (result.affectedRows === 0) {
+      res.status(StatusCodes.NOT_FOUND);
+      return;
+    }
+
+    if (mailData) {
+      await mailService.sendCancellationParticipationEmail(
+        mailData,
+        selectedTab,
+      );
+    }
+
+    res.status(StatusCodes.OK).json({ success: true });
+  } catch (err) {
+    next(err);
+  }
+};
+
 export default {
   add,
   browseUserActivity,
   editStatus,
   browseByActivity,
+  deleteParticipation,
 };

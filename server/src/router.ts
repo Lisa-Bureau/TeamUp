@@ -47,6 +47,7 @@ router.put(
   activityActions.verifyNbAvaiableSpots,
   participationActions.editStatus,
 );
+router.delete("/api/participations", participationActions.deleteParticipation);
 
 router.post("/api/message", messageActions.add);
 router.post("/api/message/likes", messageActions.addLike);
