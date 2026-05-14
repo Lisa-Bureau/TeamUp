@@ -263,7 +263,7 @@
   }
 }
 
-.modal-annulation-participation {
+.modal-cancellation-participation {
   border: none;
   border-radius: 12px;
   padding: 1.5rem;
@@ -277,7 +277,7 @@
     text-align: center;
   }
 
-  & .buttons-confirmation-annulation {
+  & .buttons-confirmation-cancellation {
     display: flex;
     justify-content: center;
     gap: 2rem;
@@ -309,10 +309,10 @@
 }
 
 @media (min-width: 1024px) {
-  .modal-annulation-participation {
+  .modal-cancellation-participation {
     padding: 2rem;
 
-    & .buttons-confirmation-annulation {
+    & .buttons-confirmation-cancellation {
       margin-top: 2rem;
 
       & > button {

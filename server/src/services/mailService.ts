@@ -4,7 +4,7 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 
 async function sendInvitationEmail(mailData: MailData) {
   const response = await resend.emails.send({
-    from: "TeamUp <noreply@linkrefine.com>",
+    from: "TeamUp <onboarding@resend.dev>",
     to: mailData.participant_email,
     subject: `${mailData.organizer_username} vous a invité à son activité !`,
     html: `
@@ -22,7 +22,7 @@ async function sendInvitationEmail(mailData: MailData) {
 async function sendRequestEmail(mailData: MailData) {
   if (mailData.auto_validation) {
     const response = await resend.emails.send({
-      from: "TeamUp <noreply@linkrefine.com>",
+      from: "TeamUp <onboarding@resend.dev>",
       to: mailData.organizer_email,
       subject: `${mailData.participant_username} a réservé une place à votre activité`,
       html: `
@@ -37,7 +37,7 @@ async function sendRequestEmail(mailData: MailData) {
 
   if (!mailData.auto_validation) {
     const response = await resend.emails.send({
-      from: "TeamUp <noreply@linkrefine.com>",
+      from: "TeamUp <onboarding@resend.dev>",
       to: mailData.organizer_email,
       subject: `${mailData.participant_username} a fait une demande de réservation pour votre activité`,
       html: `
@@ -55,7 +55,7 @@ async function sendRequestEmail(mailData: MailData) {
 async function sendAnswerInvitationEmail(mailData: MailData, status: string) {
   if (status === "accepted") {
     const response = await resend.emails.send({
-      from: "TeamUp <noreply@linkrefine.com>",
+      from: "TeamUp <onboarding@resend.dev>",
       to: mailData.organizer_email,
       subject: `${mailData.participant_username} a accepté votre invitation`,
       html: `
@@ -71,7 +71,7 @@ async function sendAnswerInvitationEmail(mailData: MailData, status: string) {
 
   if (status === "refused") {
     const response = await resend.emails.send({
-      from: "TeamUp <noreply@linkrefine.com>",
+      from: "TeamUp <onboarding@resend.dev>",
       to: mailData.organizer_email,
       subject: `${mailData.participant_username} a réfusé votre invitation`,
       html: `
@@ -88,7 +88,7 @@ async function sendAnswerInvitationEmail(mailData: MailData, status: string) {
 async function sendAnswerRequestEmail(mailData: MailData, status: string) {
   if (status === "accepted") {
     const response = await resend.emails.send({
-      from: "TeamUp <noreply@linkrefine.com>",
+      from: "TeamUp <onboarding@resend.dev>",
       to: mailData.participant_email,
       subject: `${mailData.organizer_username} a accepté votre demande`,
       html: `
@@ -104,7 +104,7 @@ async function sendAnswerRequestEmail(mailData: MailData, status: string) {
 
   if (status === "refused") {
     const response = await resend.emails.send({
-      from: "TeamUp <noreply@linkrefine.com>",
+      from: "TeamUp <onboarding@resend.dev>",
       to: mailData.participant_email,
       subject: `${mailData.organizer_username} a réfusé votre demande`,
       html: `
@@ -119,9 +119,45 @@ async function sendAnswerRequestEmail(mailData: MailData, status: string) {
   }
 }
 
+async function sendCancellationParticipationEmail(
+  mailData: MailData,
+  selectedTab: string | undefined,
+) {
+  if (selectedTab === "incoming" || selectedTab === undefined) {
+    const response = await resend.emails.send({
+      from: "TeamUp <onboarding@resend.dev>",
+      to: mailData.organizer_email,
+      subject: `${mailData.participant_username} a annulé sa participation à votre activité !`,
+      html: `
+        <h2>Mauvaise nouvelle, ${mailData.organizer_username} !</h2>
+        <p><strong>${mailData.participant_username}</strong> a annulé sa participation à votre activité <strong>${mailData.name}</strong>, le ${mailData.playing_at} à ${mailData.playing_time}.</p>
+        <p>À bientôt !</p>
+        <p>L'équipe TeamUp</p>
+      `,
+    });
+    return response;
+  }
+
+  if (selectedTab === "pending") {
+    const response = await resend.emails.send({
+      from: "TeamUp <onboarding@resend.dev>",
+      to: mailData.organizer_email,
+      subject: `${mailData.participant_username} a annulé sa demande de participation à votre activité !`,
+      html: `
+        <h2>Mauvaise nouvelle, ${mailData.organizer_username} !</h2>
+        <p><strong>${mailData.participant_username}</strong> a annulé sa demande de participation à votre activité <strong>${mailData.name}</strong>, le ${mailData.playing_at} à ${mailData.playing_time}.</p>
+        <p>À bientôt !</p>
+        <p>L'équipe TeamUp</p>
+      `,
+    });
+    return response;
+  }
+}
+
 export default {
   sendInvitationEmail,
   sendRequestEmail,
   sendAnswerInvitationEmail,
   sendAnswerRequestEmail,
+  sendCancellationParticipationEmail,
 };

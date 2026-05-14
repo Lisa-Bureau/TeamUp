@@ -73,14 +73,57 @@ function ActivityCard({
 
   // Open and close the modal to confirm that you wish to cancel your participation in the activity
 
-  const annulationModalRef = useRef<HTMLDialogElement>(null);
+  const cancellationModalRef = useRef<HTMLDialogElement>(null);
 
-  const openAnnulationModal = () => {
-    annulationModalRef.current?.showModal();
+  const openCancellationModal = () => {
+    cancellationModalRef.current?.showModal();
   };
 
-  const closeAnnulationModal = () => {
-    annulationModalRef.current?.close();
+  const closeCancellationModal = () => {
+    cancellationModalRef.current?.close();
+  };
+
+  // Function for cancel your participation or your request participation
+
+  const cancelParticipation = async (
+    activityId: number,
+    selectedTab: string | undefined,
+  ) => {
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/participations`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+          body: JSON.stringify({
+            userId: auth?.id,
+            activityId: activityId,
+            selectedTab: selectedTab,
+          }),
+        },
+      );
+
+      if (response.status === StatusCodes.NOT_FOUND) {
+        throw new Error("Participation not found");
+      }
+
+      closeCancellationModal();
+
+      if (response.status === StatusCodes.OK && selectedTab === "incoming") {
+        toast.success("Participation annulée");
+      }
+
+      if (response.status === StatusCodes.OK && selectedTab === "pending") {
+        toast.success("Demande de participation annulée");
+      }
+
+      refreshMyActivities?.();
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   return (
@@ -186,37 +229,16 @@ function ActivityCard({
               <p>{activity.username}</p>
             </div>
             {selectedTab === "incoming" && (
-              <>
-                <div className="participation-activity">
-                  <img src="/icons/check.png" alt="validate" />
-                  <button
-                    type="button"
-                    title="Annuler ma participation"
-                    onClick={openAnnulationModal}
-                  >
-                    X
-                  </button>
-                </div>
-                <dialog
-                  className="modal-annulation-participation"
-                  ref={annulationModalRef}
-                  onClick={(e) =>
-                    e.target === annulationModalRef.current &&
-                    closeAnnulationModal()
-                  }
-                  onKeyDown={(e) =>
-                    e.key === "Escape" && closeAnnulationModal()
-                  }
+              <div className="participation-activity">
+                <img src="/icons/check.png" alt="validate" />
+                <button
+                  type="button"
+                  title="Annuler ma participation"
+                  onClick={openCancellationModal}
                 >
-                  <h2>Annuler votre participation à cette activité ?</h2>
-                  <div className="buttons-confirmation-annulation">
-                    <button type="button">Oui</button>
-                    <button type="button" onClick={closeAnnulationModal}>
-                      Non
-                    </button>
-                  </div>
-                </dialog>
-              </>
+                  X
+                </button>
+              </div>
             )}
             {!selectedTab && (
               <button
@@ -261,7 +283,16 @@ function ActivityCard({
               )
             ) : selectedTab === "pending" &&
               activity.participation_status === "request" ? (
-              <img src="/icons/hourglass.png" alt="pending" />
+              <div className="participation-activity">
+                <img src="/icons/hourglass.png" alt="pending" />
+                <button
+                  type="button"
+                  title="Annuler ma participation"
+                  onClick={openCancellationModal}
+                >
+                  X
+                </button>
+              </div>
             ) : (
               selectedTab === "pending" &&
               activity.participation_status === "refused" && (
@@ -306,6 +337,34 @@ function ActivityCard({
             nbAvailableSpots={nbAvailableSpots}
           />
         )}
+
+        <dialog
+          className="modal-cancellation-participation"
+          ref={cancellationModalRef}
+          onClick={(e) =>
+            e.target === cancellationModalRef.current &&
+            closeCancellationModal()
+          }
+          onKeyDown={(e) => e.key === "Escape" && closeCancellationModal()}
+        >
+          <h2>
+            {selectedTab === "incoming" &&
+              "Annuler votre participation à cette activité ?"}
+            {selectedTab === "pending" &&
+              "Annuler votre demande de participation à cette activité ?"}
+          </h2>
+          <div className="buttons-confirmation-cancellation">
+            <button
+              type="button"
+              onClick={() => cancelParticipation(activity.id, selectedTab)}
+            >
+              Oui
+            </button>
+            <button type="button" onClick={closeCancellationModal}>
+              Non
+            </button>
+          </div>
+        </dialog>
       </article>
     </>
   );
