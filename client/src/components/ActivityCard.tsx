@@ -299,7 +299,8 @@ function ActivityCard({
                 <img
                   src="/icons/cross.png"
                   alt="refused"
-                  className="tag-status"
+                  width={32}
+                  height={32}
                 />
               )
             )}

@@ -58,6 +58,7 @@ app.use(express.json());
 // app.use(express.text());
 // app.use(express.raw());
 app.use(cookieParser());
+app.use("/public", express.static("public"));
 
 /* ************************************************************************* */
 
