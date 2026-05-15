@@ -56,7 +56,7 @@ const add: RequestHandler = async (req, res, next) => {
     }
 
     if (mailData.visibility) {
-      await mailService.sendRequestEmail(mailData);
+      await mailService.sendReservationEmail(mailData);
     }
 
     res.json(response);
@@ -125,10 +125,7 @@ const deleteParticipation: RequestHandler = async (req, res, next) => {
     }
 
     if (mailData) {
-      await mailService.sendCancellationParticipationEmail(
-        mailData,
-        selectedTab,
-      );
+      await mailService.sendCancelParticipationEmail(mailData, selectedTab);
     }
 
     res.status(StatusCodes.OK).json({ success: true });
