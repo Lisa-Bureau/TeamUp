@@ -4,7 +4,7 @@ import { StatusCodes } from "http-status-codes";
 import ParticipantsList from "./ParticipantsList";
 import toast from "react-hot-toast";
 import { useAuth } from "../context/AuthContext";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
 type ActivityCardType = {
   activity: Activity;
@@ -31,6 +31,7 @@ function ActivityCard({
   const nbAvailableSpots = activity.nb_spots - activity.nb_participant;
   const widthProgressBar = (100 / activity.nb_spots) * activity.nb_participant;
   const navigate = useNavigate();
+  const [openDropdownSettings, setOpenDropdownSettings] = useState(false);
 
   const { auth } = useAuth();
 
@@ -307,19 +308,35 @@ function ActivityCard({
           </div>
         )}
         {selectedTab === "published" && (
-          <button
-            type="button"
-            className={`dropdown-participation ${participantsListIsOpen ? "dropdown-open" : ""}`}
-            onClick={onClickListParticipant}
-            disabled={!activity.total_participant}
-          >
-            Participants
-            <img
-              src="/icons/chevron.png"
-              alt=""
-              className={`${participantsListIsOpen ? "rotate" : ""}`}
-            />
-          </button>
+          <div className="container-buttons-card">
+            <button
+              type="button"
+              className={`dropdown-participation ${participantsListIsOpen ? "dropdown-open" : ""}`}
+              onClick={onClickListParticipant}
+              disabled={!activity.total_participant}
+            >
+              Participants
+              <img
+                src="/icons/chevron.png"
+                alt=""
+                className={`${participantsListIsOpen ? "rotate" : ""}`}
+              />
+            </button>
+            <button
+              type="button"
+              className={`button-setting ${openDropdownSettings ? "dropdown-setting-open" : "dropdown-setting-close"}`}
+              onClick={() => setOpenDropdownSettings(!openDropdownSettings)}
+            >
+              <img src="/icons/settings.png" alt="setting" />
+            </button>
+
+            {openDropdownSettings && (
+              <div className="dropdown-button-setting">
+                <button type="button">Modifier</button>
+                <button type="button">Supprimer</button>
+              </div>
+            )}
+          </div>
         )}
 
         <div
