@@ -27,6 +27,7 @@ ul.participant-list {
   max-height: 190px;
   overflow-y: auto;
   margin-top: 0.5rem;
+  border-radius: 0 0 10px 10px;
 }
 
 ul.participant-list li {
