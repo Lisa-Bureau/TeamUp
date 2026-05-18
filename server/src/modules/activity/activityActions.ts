@@ -145,8 +145,6 @@ const deleteActivity: RequestHandler = async (req, res, next) => {
       return;
     }
 
-    console.log("participants:", participantsEmailExceptRefused);
-
     if (mailData && participantsEmailExceptRefused.length > 0) {
       await mailService.sendCancellationActivityEmail(
         mailData,
