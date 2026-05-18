@@ -122,8 +122,43 @@ function ActivityCard({
       }
 
       refreshMyActivities?.();
-    } catch (err) {
-      console.error(err);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  // Delete an activity
+
+  const deleteActivity = async (activityId: number) => {
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/activities`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+          body: JSON.stringify({
+            userId: auth?.id,
+            activityId: activityId,
+          }),
+        },
+      );
+
+      if (response.status === StatusCodes.NOT_FOUND) {
+        throw new Error("Activity not found");
+      }
+
+      closeCancellationModal();
+
+      if (response.status === StatusCodes.OK) {
+        toast.success("Activité annulée");
+      }
+
+      refreshMyActivities?.();
+    } catch (error) {
+      console.error(error);
     }
   };
 
@@ -333,7 +368,9 @@ function ActivityCard({
             {openDropdownSettings && (
               <div className="dropdown-button-setting">
                 <button type="button">Modifier</button>
-                <button type="button">Supprimer</button>
+                <button type="button" onClick={openCancellationModal}>
+                  Supprimer
+                </button>
               </div>
             )}
           </div>
@@ -370,14 +407,30 @@ function ActivityCard({
               "Annuler votre participation à cette activité ?"}
             {selectedTab === "pending" &&
               "Annuler votre demande de participation à cette activité ?"}
+            {selectedTab === "published" && "Annuler votre activité ?"}
           </h2>
+          {selectedTab === "published" && (
+            <p>Les différents participants seront prévenus par mail.</p>
+          )}
           <div className="buttons-confirmation-cancellation">
-            <button
-              type="button"
-              onClick={() => cancelParticipation(activity.id, selectedTab)}
-            >
-              Oui
-            </button>
+            {(selectedTab === "incoming" || selectedTab === "pending") && (
+              <button
+                type="button"
+                onClick={() => cancelParticipation(activity.id, selectedTab)}
+              >
+                Oui
+              </button>
+            )}
+            {selectedTab === "published" && (
+              <button
+                type="button"
+                onClick={() => {
+                  deleteActivity(activity.id);
+                }}
+              >
+                Oui
+              </button>
+            )}
             <button type="button" onClick={closeCancellationModal}>
               Non
             </button>

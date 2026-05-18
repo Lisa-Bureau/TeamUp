@@ -36,6 +36,7 @@ declare global {
     username: string;
     picture: string;
     status: string;
+    email: string;
   };
 
   type Filters = {

@@ -277,6 +277,13 @@
     text-align: center;
   }
 
+  & > p {
+    font-family: var(--tag-font);
+    font-size: var(--tag-size);
+    text-align: center;
+    margin-top: 0.5rem;
+  }
+
   & .buttons-confirmation-cancellation {
     display: flex;
     justify-content: center;
@@ -320,6 +327,10 @@
         height: 2.5rem;
         font-size: var(--button-desktop-size);
       }
+    }
+
+    & > p {
+      font-size: var(--tag-desktop-size);
     }
   }
 }

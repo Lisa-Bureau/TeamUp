@@ -1,6 +1,6 @@
 import type { ResultSetHeader, RowDataPacket } from "mysql2";
 import databaseClient from "../../../database/client";
-import type { Rows } from "../../../database/client";
+import type { Result, Rows } from "../../../database/client";
 
 class ActivityRepository {
   async create(activity: ActivityForm) {
@@ -146,6 +146,19 @@ class ActivityRepository {
     return rows[0] as MailData;
   }
 
+  async readWithOrganizerForCancellation(activityId: number, userId: number) {
+    const [rows] = await databaseClient.query<Rows>(
+      `SELECT a.*, u.email AS organizer_email, u.username AS organizer_username, s.name
+      FROM activity AS a
+      JOIN user AS u ON u.id = a.user_id
+      JOIN sport AS s ON s.id = a.sport_id
+      WHERE a.id = ? AND a.user_id = ?`,
+      [activityId, userId],
+    );
+
+    return rows[0] as MailData;
+  }
+
   async readOne(activityId: number) {
     const [rows] = await databaseClient.query<Rows>(
       `SELECT a.*, u.username, u.picture AS user_picture, s.name,
@@ -199,6 +212,16 @@ class ActivityRepository {
       [userId, userId],
     );
     return rows as Activity[];
+  }
+
+  async delete(userId: number, activityId: number) {
+    const [result] = await databaseClient.query<Result>(
+      `DELETE FROM activity
+        WHERE user_id = ? AND id = ?`,
+      [userId, activityId],
+    );
+
+    return result;
   }
 }
 

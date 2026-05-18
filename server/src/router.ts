@@ -34,6 +34,7 @@ router.use(authActions.requireAuth);
 router.get("/api/profile", userActions.read);
 
 router.post("/api/activities", activityActions.add);
+router.delete("/api/activities", activityActions.deleteActivity);
 router.get("/api/me/activities", activityActions.browseMine);
 
 router.get("/api/participations", participationActions.browseUserActivity);
