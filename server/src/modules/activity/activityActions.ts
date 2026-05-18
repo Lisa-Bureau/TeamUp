@@ -122,4 +122,47 @@ const verifyNbAvaiableSpots: RequestHandler = async (req, res, next) => {
   }
 };
 
-export default { add, browse, browseMine, read, verifyNbAvaiableSpots };
+const deleteActivity: RequestHandler = async (req, res, next) => {
+  try {
+    const { userId, activityId } = req.body;
+
+    const mailData = await activityRepository.readWithOrganizerForCancellation(
+      activityId,
+      userId,
+    );
+
+    const allParticipants =
+      await participationRepository.readAllParticipants(activityId);
+
+    const participantsEmailExceptRefused: string[] = allParticipants
+      .filter((participant) => participant.status !== "refused")
+      .map((participant) => participant.email);
+
+    const result = await activityRepository.delete(userId, activityId);
+
+    if (result.affectedRows === 0) {
+      res.status(StatusCodes.NOT_FOUND);
+      return;
+    }
+
+    if (mailData && participantsEmailExceptRefused.length > 0) {
+      await mailService.sendCancellationActivityEmail(
+        mailData,
+        participantsEmailExceptRefused,
+      );
+    }
+
+    res.status(StatusCodes.OK).json({ success: true });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export default {
+  add,
+  browse,
+  browseMine,
+  read,
+  verifyNbAvaiableSpots,
+  deleteActivity,
+};

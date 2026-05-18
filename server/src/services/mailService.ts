@@ -4,6 +4,7 @@ import ReservationEmail from "../emails/ReservationEmail";
 import AnswerInvitationEmail from "../emails/AnswerInvitationEmail";
 import AnswerRequestEmail from "../emails/AnswerRequestEmail";
 import CancelParticipationEmail from "../emails/CancelParticipation";
+import CancelActivityEmail from "../emails/CancelActivity";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -61,10 +62,29 @@ async function sendCancelParticipationEmail(
   return response;
 }
 
+async function sendCancellationActivityEmail(
+  mailData: MailData,
+  participantsEmailExceptRefused: string[],
+) {
+  const responses = await Promise.all(
+    participantsEmailExceptRefused.map((email) =>
+      resend.emails.send({
+        from: "TeamUp <onboarding@resend.dev>",
+        to: email,
+        subject: "Activité annulée !",
+        react: CancelActivityEmail(mailData),
+      }),
+    ),
+  );
+
+  return responses;
+}
+
 export default {
   sendInvitationEmail,
   sendReservationEmail,
   sendAnswerInvitationEmail,
   sendAnswerRequestEmail,
   sendCancelParticipationEmail,
+  sendCancellationActivityEmail,
 };
