@@ -10,70 +10,101 @@ import toast from "react-hot-toast";
 
 const LIMIT = 6;
 
+// --- TYPES & INITIAL STATEs ---
+type ActivityLevel = "beginner" | "amateur" | "advanced" | "all";
+
+interface CriteriaState {
+  level: ActivityLevel;
+  locker: boolean;
+  shower: boolean;
+  toilet: boolean;
+  airConditioning: boolean;
+  handisport: boolean;
+}
+
+const initialCriteria: CriteriaState = {
+  level: "all",
+  locker: false,
+  shower: false,
+  toilet: false,
+  airConditioning: false,
+  handisport: false,
+};
+
 function ActivityForm() {
   const navigate = useNavigate();
-  const [sports, setSports] = useState<Sport[]>([]);
-  const [sportId, setSportId] = useState("");
-  const [sportSearch, setSportSearch] = useState("");
-  const [showSportsDropdown, setShowSportsDropdown] = useState(false);
+  const { auth } = useAuth();
+  const isMobile = useMediaQuery({ query: "(max-width: 1439px)" });
+
+  // --- REFS (Handling DOM and uncontrolled inputs) ---
   const sportsDropdownRef = useRef<HTMLDivElement>(null);
   const criteriaModalRef = useRef<HTMLDialogElement>(null);
   const addressRef = useRef<HTMLInputElement>(null);
   const zipCodeRef = useRef<HTMLInputElement>(null);
   const cityRef = useRef<HTMLInputElement>(null);
-  const [playingAt, setPlayingAt] = useState("");
-  const [playingTime, setPlayingTime] = useState("");
   const playingDurationRef = useRef<HTMLInputElement>(null);
   const nbPlacesRef = useRef<HTMLInputElement>(null);
   const descriptionRef = useRef<HTMLTextAreaElement>(null);
+
+  // --- STATES ---
+
+  // API data
+  const [sports, setSports] = useState<Sport[]>([]);
+  const [activities, setActivities] = useState<Activity[]>([]);
+
+  // Search & Dropdown Menu for Sports
+  const [sportId, setSportId] = useState("");
+  const [sportSearch, setSportSearch] = useState("");
+  const [showSportsDropdown, setShowSportsDropdown] = useState(false);
+
+  // Form: Date, Time, Price, and Visibility
+  const [playingAt, setPlayingAt] = useState("");
+  const [playingTime, setPlayingTime] = useState("");
   const [isFree, setIsFree] = useState(true);
   const [price, setPrice] = useState("");
   const [isPublic, setIsPublic] = useState(true);
   const [autoValidation, setAutoValidation] = useState(false);
-  const [locker, setLocker] = useState(false);
-  const [shower, setShower] = useState(false);
-  const [toilet, setToilet] = useState(false);
-  const [airConditioning, setAirConditioning] = useState(false);
-  const [level, setLevel] = useState<
-    "beginner" | "amateur" | "advanced" | "all"
-  >("all");
-  const [handisport, setHandisport] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // Grouping of optional criteria
+  const [criteria, setCriteria] = useState<CriteriaState>(initialCriteria);
+
+  // Guest Management (Private Mode)
   const [guestInput, setGuestInput] = useState<string>("");
   const [guests, setGuests] = useState<User[]>([]);
+
+  // UI (Errors, Loaders, Tooltips)
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [openTooltipStatut, setOpenTooltipStatut] = useState(false);
   const [error, setError] = useState({ addGuest: "", addActivity: "" });
-  const [activities, setActivities] = useState<Activity[]>([]);
 
-  const isMobile = useMediaQuery({ query: "(max-width: 1439px)" });
+  // EFFECTS (Component lifecycle) ---
 
-  const { auth } = useAuth();
-
+  // Initial load: List of sports and recent activities
   useEffect(() => {
+    // Sports Recovery
     fetch(`${import.meta.env.VITE_API_URL}/api/sports`)
       .then((res) => res.json())
-      .then((sports) => setSports(sports))
+      .then(setSports)
       .catch(() =>
         setError((prev) => ({
           ...prev,
+
           addActivity: "Impossible de charger les sports",
         })),
       );
+
+    // Recovering the latest activities
+    fetch(`${import.meta.env.VITE_API_URL}/api/activities?limit=${LIMIT}`, {
+      credentials: "include",
+    })
+      .then((res) => res.json())
+      .then((data) => setActivities(data.activities))
+      .catch(console.error);
   }, []);
 
-  useEffect(() => {
-    const hideSportsDropdown = (e: MouseEvent) => {
-      if (
-        sportsDropdownRef.current &&
-        !sportsDropdownRef.current.contains(e.target as Node)
-      ) {
-        setShowSportsDropdown(false);
-      }
-    };
-    document.addEventListener("mousedown", hideSportsDropdown);
-    return () => document.removeEventListener("mousedown", hideSportsDropdown);
-  }, []);
+  // --- BUSINESS LOGIC / FILTERS ---
 
+  // Dynamic filtering of the list of sports
   const filteredSports = sports.filter((sport) =>
     sport.name.toLowerCase().includes(sportSearch.toLowerCase()),
   );
@@ -84,14 +115,30 @@ function ActivityForm() {
     setShowSportsDropdown(false);
   };
 
-  const openCriteriaModal = () => {
-    criteriaModalRef.current?.showModal();
+  // Criteria Managers
+  const updateCriteria = (
+    key: keyof CriteriaState,
+    value: string | boolean,
+  ) => {
+    setCriteria((prev) => ({ ...prev, [key]: value }));
   };
 
-  const closeCriteriaModal = () => {
-    criteriaModalRef.current?.close();
+  const resetCriteria = () => setCriteria(initialCriteria);
+
+  const hasActiveCriteria = () => {
+    return (
+      criteria.level !== "all" ||
+      criteria.locker ||
+      criteria.shower ||
+      criteria.toilet ||
+      criteria.airConditioning ||
+      criteria.handisport
+    );
   };
 
+  // --- ACTIONS & API CALLS ---
+
+  // Submission of the Business Registration Form
   const createActivity = async (e: React.FormEvent) => {
     e.preventDefault();
     setError((prev) => ({ ...prev, addActivity: "" }));
@@ -112,11 +159,7 @@ function ActivityForm() {
         price: isFree ? 0 : Number(price),
         visibility: isPublic,
         auto_validation: isPublic ? autoValidation : false,
-        level: level,
-        locker: locker,
-        shower: shower,
-        toilet: toilet,
-        air_conditioning: airConditioning,
+        ...criteria,
       },
       guests,
     };
@@ -158,6 +201,7 @@ function ActivityForm() {
     }
   };
 
+  // Adding a guest via email
   const addGuest = async () => {
     setError((prev) => ({ ...prev, addActivity: "" }));
     try {
@@ -194,14 +238,14 @@ function ActivityForm() {
     setGuests((prev) => prev.filter((g) => g.id !== guest.id));
   };
 
-  useEffect(() => {
-    fetch(`${import.meta.env.VITE_API_URL}/api/activities?limit=${LIMIT}`, {
-      method: "GET",
-      credentials: "include",
-    })
-      .then((response) => response.json())
-      .then((activities) => setActivities(activities.activities));
-  }, []);
+  // --- ACTIONS OF THE MODAL ---
+  const openCriteriaModal = () => {
+    criteriaModalRef.current?.showModal();
+  };
+
+  const closeCriteriaModal = () => {
+    criteriaModalRef.current?.close();
+  };
 
   return (
     <section className="publication-page">
@@ -210,6 +254,7 @@ function ActivityForm() {
         <p className="required-fields">*Champs obligatoires</p>
 
         <form className="publication-form" onSubmit={createActivity}>
+          {/* FIELD: Sport Selection (Dropdown Menu) */}
           <div className="combobox" ref={sportsDropdownRef}>
             <div className="input-with-icon">
               <img
@@ -230,13 +275,17 @@ function ActivityForm() {
                 }}
                 onFocus={() => setShowSportsDropdown(true)}
                 required={!sportId}
+                onBlur={() => setShowSportsDropdown(false)}
               />
             </div>
             {showSportsDropdown && filteredSports.length > 0 && (
               <ul className="combobox-dropdown">
                 {filteredSports.slice(0, 250).map((sport) => (
                   <li key={sport.id}>
-                    <button type="button" onClick={() => selectSport(sport)}>
+                    <button
+                      type="button"
+                      onMouseDown={() => selectSport(sport)}
+                    >
                       {sport.name}
                     </button>
                   </li>
@@ -246,6 +295,7 @@ function ActivityForm() {
             <input type="hidden" name="sportId" value={sportId} />
           </div>
 
+          {/* FIELD : Address */}
           <div className="input-with-icon">
             <img src="./icons/pin-input.svg" alt="" width="24" height="24" />
             <input
@@ -257,6 +307,7 @@ function ActivityForm() {
             />
           </div>
 
+          {/* FIELD : Zipcode & city */}
           <div className="field-row">
             <div className="input-with-icon">
               <img src="./icons/pin-input.svg" alt="" width="24" height="24" />
@@ -281,6 +332,7 @@ function ActivityForm() {
             </div>
           </div>
 
+          {/* FIELD : Date, Time & During */}
           <div className="field-row field-row-3">
             <div className="input-with-icon date-input-wrapper">
               <img
@@ -337,6 +389,7 @@ function ActivityForm() {
             </div>
           </div>
 
+          {/* FIELD : Spots, Budget & Description */}
           <div className="places-budget-description-row">
             <div className="places-budget-column">
               <div className="input-with-icon">
@@ -412,64 +465,75 @@ function ActivityForm() {
             />
           </div>
 
-          {(locker ||
-            shower ||
-            toilet ||
-            airConditioning ||
-            level !== "all" ||
-            handisport) && (
+          {/* DISPLAY OF ACTIVE CRITERIA BADGES */}
+          {hasActiveCriteria() && (
             <div className="criteria-tags">
-              {level !== "all" && (
+              {criteria.level !== "all" && (
                 <span className="criteria-tag">
-                  {level === "beginner"
+                  {criteria.level === "beginner"
                     ? "Débutant"
-                    : level === "amateur"
+                    : criteria.level === "amateur"
                       ? "Intermédiaire"
                       : "Confirmé"}
-                  <button type="button" onClick={() => setLevel("all")}>
-                    ✕
-                  </button>
-                </span>
-              )}
-              {locker && (
-                <span className="criteria-tag">
-                  Vestiaires
-                  <button type="button" onClick={() => setLocker(false)}>
-                    ✕
-                  </button>
-                </span>
-              )}
-              {shower && (
-                <span className="criteria-tag">
-                  Douches
-                  <button type="button" onClick={() => setShower(false)}>
-                    ✕
-                  </button>
-                </span>
-              )}
-              {toilet && (
-                <span className="criteria-tag">
-                  Toilettes
-                  <button type="button" onClick={() => setToilet(false)}>
-                    ✕
-                  </button>
-                </span>
-              )}
-              {airConditioning && (
-                <span className="criteria-tag">
-                  Climatisation
                   <button
                     type="button"
-                    onClick={() => setAirConditioning(false)}
+                    onClick={() => updateCriteria("level", "all")}
                   >
                     ✕
                   </button>
                 </span>
               )}
-              {handisport && (
+              {criteria.locker && (
+                <span className="criteria-tag">
+                  Vestiaires
+                  <button
+                    type="button"
+                    onClick={() => updateCriteria("locker", false)}
+                  >
+                    ✕
+                  </button>
+                </span>
+              )}
+              {criteria.shower && (
+                <span className="criteria-tag">
+                  Douches
+                  <button
+                    type="button"
+                    onClick={() => updateCriteria("shower", false)}
+                  >
+                    ✕
+                  </button>
+                </span>
+              )}
+              {criteria.toilet && (
+                <span className="criteria-tag">
+                  Toilettes
+                  <button
+                    type="button"
+                    onClick={() => updateCriteria("toilet", false)}
+                  >
+                    ✕
+                  </button>
+                </span>
+              )}
+              {criteria.airConditioning && (
+                <span className="criteria-tag">
+                  Climatisation
+                  <button
+                    type="button"
+                    onClick={() => updateCriteria("airConditioning", false)}
+                  >
+                    ✕
+                  </button>
+                </span>
+              )}
+              {criteria.handisport && (
                 <span className="criteria-tag">
                   Handisport
-                  <button type="button" onClick={() => setHandisport(false)}>
+                  <button
+                    type="button"
+                    onClick={() => updateCriteria("handisport", false)}
+                  >
                     ✕
                   </button>
                 </span>
@@ -485,18 +549,14 @@ function ActivityForm() {
             Ajouter des critères
           </button>
 
+          {/* CRITERIA SECTION - DESKTOP VERSION */}
           <section className="criteria-desktop">
             <header className="criteria-desktop-header">
               <h3>Critères supplémentaires</h3>
               <button
                 type="button"
                 onClick={() => {
-                  setLocker(false);
-                  setShower(false);
-                  setToilet(false);
-                  setAirConditioning(false);
-                  setLevel("all");
-                  setHandisport(false);
+                  resetCriteria;
                 }}
               >
                 Effacer filtres
@@ -509,32 +569,34 @@ function ActivityForm() {
                   Vestiaires
                   <input
                     type="checkbox"
-                    checked={locker}
-                    onChange={(e) => setLocker(e.target.checked)}
+                    checked={criteria.locker}
+                    onChange={(e) => updateCriteria("locker", e.target.checked)}
                   />
                 </label>
                 <label>
                   Douches
                   <input
                     type="checkbox"
-                    checked={shower}
-                    onChange={(e) => setShower(e.target.checked)}
+                    checked={criteria.shower}
+                    onChange={(e) => updateCriteria("shower", e.target.checked)}
                   />
                 </label>
                 <label>
                   Toilettes
                   <input
                     type="checkbox"
-                    checked={toilet}
-                    onChange={(e) => setToilet(e.target.checked)}
+                    checked={criteria.toilet}
+                    onChange={(e) => updateCriteria("toilet", e.target.checked)}
                   />
                 </label>
                 <label>
                   Climatisation
                   <input
                     type="checkbox"
-                    checked={airConditioning}
-                    onChange={(e) => setAirConditioning(e.target.checked)}
+                    checked={criteria.airConditioning}
+                    onChange={(e) =>
+                      updateCriteria("airConditioning", e.target.checked)
+                    }
                   />
                 </label>
               </fieldset>
@@ -545,8 +607,8 @@ function ActivityForm() {
                   <input
                     type="radio"
                     name="levelDesktop"
-                    checked={level === "all"}
-                    onChange={() => setLevel("all")}
+                    checked={criteria.level === "all"}
+                    onChange={() => updateCriteria("level", "all")}
                   />
                 </label>
                 <label>
@@ -554,8 +616,8 @@ function ActivityForm() {
                   <input
                     type="radio"
                     name="levelDesktop"
-                    checked={level === "beginner"}
-                    onChange={() => setLevel("beginner")}
+                    checked={criteria.level === "beginner"}
+                    onChange={() => updateCriteria("level", "beginner")}
                   />
                 </label>
                 <label>
@@ -563,8 +625,8 @@ function ActivityForm() {
                   <input
                     type="radio"
                     name="levelDesktop"
-                    checked={level === "amateur"}
-                    onChange={() => setLevel("amateur")}
+                    checked={criteria.level === "amateur"}
+                    onChange={() => updateCriteria("level", "amateur")}
                   />
                 </label>
                 <label>
@@ -572,8 +634,8 @@ function ActivityForm() {
                   <input
                     type="radio"
                     name="levelDesktop"
-                    checked={level === "advanced"}
-                    onChange={() => setLevel("advanced")}
+                    checked={criteria.level === "advanced"}
+                    onChange={() => updateCriteria("level", "advanced")}
                   />
                 </label>
               </fieldset>
@@ -583,14 +645,17 @@ function ActivityForm() {
                   Handisport
                   <input
                     type="checkbox"
-                    checked={handisport}
-                    onChange={(e) => setHandisport(e.target.checked)}
+                    checked={criteria.handisport}
+                    onChange={(e) =>
+                      updateCriteria("handisport", e.target.checked)
+                    }
                   />
                 </label>
               </fieldset>
             </div>
           </section>
 
+          {/* SECTION: STATUS OF THE ACTIVITY (PUBLIC / PRIVATE) */}
           <div className="status-row">
             <div className="status-box">
               <span className="status-label tooltip">
@@ -641,7 +706,7 @@ function ActivityForm() {
               </p>
             )}
 
-            {isPublic && (
+            {isPublic ? (
               <div className="status-box">
                 <span className="status-label">
                   Réservation automatique * :
@@ -665,9 +730,8 @@ function ActivityForm() {
                   Non
                 </label>
               </div>
-            )}
-
-            {!isPublic && (
+            ) : (
+              /* GUEST MANAGEMENT SECTION (PRIVATE) */
               <div className="guests-section">
                 {guests.map((guest) => (
                   <div key={guest.id} className="guest-row added-guest">
@@ -760,6 +824,7 @@ function ActivityForm() {
           </button>
         </form>
 
+        {/* CRITERIA TABLE (MOBILE VERSION) */}
         <dialog
           className="modal-criteria"
           ref={criteriaModalRef}
@@ -781,12 +846,7 @@ function ActivityForm() {
                 type="button"
                 className="modal-clear"
                 onClick={() => {
-                  setLocker(false);
-                  setShower(false);
-                  setToilet(false);
-                  setAirConditioning(false);
-                  setLevel("all");
-                  setHandisport(false);
+                  resetCriteria;
                 }}
               >
                 Tout effacer
@@ -800,32 +860,34 @@ function ActivityForm() {
                   Vestiaires
                   <input
                     type="checkbox"
-                    checked={locker}
-                    onChange={(e) => setLocker(e.target.checked)}
+                    checked={criteria.locker}
+                    onChange={(e) => updateCriteria("locker", e.target.checked)}
                   />
                 </label>
                 <label className="criteria-label">
                   Douches
                   <input
                     type="checkbox"
-                    checked={shower}
-                    onChange={(e) => setShower(e.target.checked)}
+                    checked={criteria.shower}
+                    onChange={(e) => updateCriteria("shower", e.target.checked)}
                   />
                 </label>
                 <label className="criteria-label">
                   Toilettes
                   <input
                     type="checkbox"
-                    checked={toilet}
-                    onChange={(e) => setToilet(e.target.checked)}
+                    checked={criteria.toilet}
+                    onChange={(e) => updateCriteria("toilet", e.target.checked)}
                   />
                 </label>
                 <label className="criteria-label">
                   Climatisation
                   <input
                     type="checkbox"
-                    checked={airConditioning}
-                    onChange={(e) => setAirConditioning(e.target.checked)}
+                    checked={criteria.airConditioning}
+                    onChange={(e) =>
+                      updateCriteria("airConditioning", e.target.checked)
+                    }
                   />
                 </label>
               </div>
@@ -841,8 +903,8 @@ function ActivityForm() {
                   <input
                     type="radio"
                     name="level"
-                    checked={level === "all"}
-                    onChange={() => setLevel("all")}
+                    checked={criteria.level === "all"}
+                    onChange={() => updateCriteria("level", "all")}
                   />
                 </label>
                 <label className="criteria-label">
@@ -850,8 +912,8 @@ function ActivityForm() {
                   <input
                     type="radio"
                     name="level"
-                    checked={level === "beginner"}
-                    onChange={() => setLevel("beginner")}
+                    checked={criteria.level === "beginner"}
+                    onChange={() => updateCriteria("level", "beginner")}
                   />
                 </label>
                 <label className="criteria-label">
@@ -859,8 +921,8 @@ function ActivityForm() {
                   <input
                     type="radio"
                     name="level"
-                    checked={level === "amateur"}
-                    onChange={() => setLevel("amateur")}
+                    checked={criteria.level === "amateur"}
+                    onChange={() => updateCriteria("level", "amateur")}
                   />
                 </label>
                 <label className="criteria-label">
@@ -868,8 +930,8 @@ function ActivityForm() {
                   <input
                     type="radio"
                     name="level"
-                    checked={level === "advanced"}
-                    onChange={() => setLevel("advanced")}
+                    checked={criteria.level === "advanced"}
+                    onChange={() => updateCriteria("level", "advanced")}
                   />
                 </label>
               </div>
@@ -884,8 +946,10 @@ function ActivityForm() {
                   Handisport
                   <input
                     type="checkbox"
-                    checked={handisport}
-                    onChange={(e) => setHandisport(e.target.checked)}
+                    checked={criteria.handisport}
+                    onChange={(e) =>
+                      updateCriteria("handisport", e.target.checked)
+                    }
                   />
                 </label>
               </div>
@@ -902,6 +966,7 @@ function ActivityForm() {
         </dialog>
       </div>
 
+      {/* RENDER RECENT ACTIVITIES (DESKTOP ONLY) */}
       {!isMobile && <div className="seperation"> </div>}
 
       {!isMobile && (
